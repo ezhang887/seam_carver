@@ -6,4 +6,5 @@ My project idea is to create a tool for seam carving, also known as content-awar
 
 ## Resources:
 [Wikipedia Article](https://en.wikipedia.org/wiki/Seam_carving)  
-[Article from Brown University](http://cs.brown.edu/courses/cs129/results/proj3/taox/)
+[Article from Brown University](http://cs.brown.edu/courses/cs129/results/proj3/taox/)  
+[Research Article](http://www.faculty.idc.ac.il/arik/SCWeb/imret/index.html)
