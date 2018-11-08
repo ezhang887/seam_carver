@@ -12,5 +12,5 @@ Some extra features that may or may not be worked on:
 ## Resources:
 [Wikipedia Article](https://en.wikipedia.org/wiki/Seam_carving)  
 [Article from Brown University](http://cs.brown.edu/courses/cs129/results/proj3/taox/)  
-[Research Article](http://www.faculty.idc.ac.il/arik/SCWeb/imret/index.html)
+[Research Article](http://www.faculty.idc.ac.il/arik/SCWeb/imret/index.html)  
 [CMU Article](http://graphics.cs.cmu.edu/courses/15-463/2012_fall/hw/proj3-seamcarving/imret.pdf)
