@@ -8,7 +8,7 @@ Some extra features that may or may not be worked on:
 * Face detection 
 * Object removal  
 ## Libraries:
-[OpenFrameworks](https://openframeworks.cc/) will be used create a windows application for this project. Specifically, I will be using the [graphics library](https://openframeworks.cc/documentation/graphics/) to load/display/save images. The algorithm/processing will not use any outside libraries.
+[OpenFrameworks](https://openframeworks.cc/) will be used create a windows application for this project. Specifically, I will be using the [graphics library](https://openframeworks.cc/documentation/graphics/) to load/display/save images. The algorithm/processing will not use any outside libraries. I will also be using [OpenCV](https://openframeworks.cc/documentation/ofxOpenCv/) to draw the seams.
 ## Resources:
 [Wikipedia Article](https://en.wikipedia.org/wiki/Seam_carving)  
 [Article from Brown University](http://cs.brown.edu/courses/cs129/results/proj3/taox/)  
