@@ -2,7 +2,22 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    test.load("images/test.jpg");
+    button.addListener(this, &ofApp::buttonPressed);
+    string path = "images/robot.jpg";
+    test.load(path);
+
+    int max_h = 700;
+    int max_w = 700;
+    double ratio = test.getHeight()/test.getWidth();
+    int bigger = max(test.getHeight(), test.getWidth());
+    test.resize(max_h * test.getHeight()/bigger, max_w * test.getWidth()/bigger*ratio);
+
+    gui.setup();
+    gui.add(button.setup("button"));
+}
+
+void ofApp::buttonPressed(){
+    cout << "BUTTON PRESSED" << endl;
 }
 
 //--------------------------------------------------------------
@@ -12,7 +27,9 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    test.draw(1,1);
+    ofBackgroundGradient(ofColor::white, ofColor::gray);
+    gui.draw();
+    test.draw(500, 10);
 }
 
 //--------------------------------------------------------------

@@ -1,11 +1,18 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
 
     private: 
+        ofxPanel gui;
+
         ofImage test;
+        ofImage other;
+        ofxButton button;
+
+        void buttonPressed();
 
     public:
         void setup();
