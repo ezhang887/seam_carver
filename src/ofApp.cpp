@@ -14,6 +14,7 @@ void ofApp::setup(){
 
     gui.setup();
     gui.add(button.setup("button"));
+    gui.add(input.setup("Set target width", 0, 0, 2000,200,30));
 }
 
 void ofApp::buttonPressed(){

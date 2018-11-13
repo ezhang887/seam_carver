@@ -7,10 +7,10 @@ class ofApp : public ofBaseApp{
 
     private: 
         ofxPanel gui;
+        ofxButton button;
+        ofxInputField<int> input;
 
         ofImage test;
-        ofImage other;
-        ofxButton button;
 
         void buttonPressed();
 
