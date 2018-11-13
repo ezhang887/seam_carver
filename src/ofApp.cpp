@@ -3,14 +3,14 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     button.addListener(this, &ofApp::buttonPressed);
-    string path = "images/robot.jpg";
+    string path = "images/test.jpg";
     test.load(path);
 
     int max_h = 700;
     int max_w = 700;
     double ratio = test.getHeight()/test.getWidth();
     int bigger = max(test.getHeight(), test.getWidth());
-    test.resize(max_h * test.getHeight()/bigger, max_w * test.getWidth()/bigger*ratio);
+    test.resize(max_w * test.getWidth()/bigger,max_h * test.getHeight()/bigger);
 
     gui.setup();
     gui.add(button.setup("button"));
