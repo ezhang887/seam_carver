@@ -13,7 +13,8 @@ void ofApp::setup(){
 }
 
 void ofApp::buttonPressed(){
-    cout << "BUTTON PRESSED" << endl;
+    ofImage to_save(test);
+    to_save.save("saved.jpg");
 }
 
 void ofApp::loadImage(){
