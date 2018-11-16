@@ -2,8 +2,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    save.addListener(this, &ofApp::buttonPressed);
+    save.addListener(this, &ofApp::saveImage);
     load.addListener(this, &ofApp::loadImage);
+    popup.addListener(this, &ofApp::popupImage);
     
     gui.setup();
     gui.add(save.setup("save image"));
@@ -12,9 +13,14 @@ void ofApp::setup(){
     gui.add(target_height.setup("Set target height", 0));
 }
 
-void ofApp::buttonPressed(){
-    ofImage to_save(test);
-    to_save.save("saved.jpg");
+void ofApp::saveImage(){
+    ofFileDialogResult result = ofSystemSaveDialog("saved.jpg", "Save");
+    if(result.bSuccess) {
+        string path = result.getPath();
+        ofImage to_save(test);
+        to_save.save(path);
+    }
+    
 }
 
 void ofApp::loadImage(){
@@ -28,6 +34,10 @@ void ofApp::loadImage(){
         int bigger = max(test.getHeight(), test.getWidth());
         test.resize(max_w * test.getWidth()/bigger,max_h * test.getHeight()/bigger);
     }
+}
+
+void ofApp::popupImage(){
+    
 }
 
 //--------------------------------------------------------------

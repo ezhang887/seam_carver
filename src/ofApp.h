@@ -8,6 +8,7 @@ class ofApp : public ofBaseApp{
     private: 
         ofxPanel gui;
         ofxButton save;
+        ofxButton popup;
         ofxButton load;
         ofxInputField<int> target_height;
         ofxInputField<int> target_width;
@@ -16,6 +17,7 @@ class ofApp : public ofBaseApp{
 
         void buttonPressed();
         void loadImage();
+        void popupImage();
 
     public:
         void setup();
