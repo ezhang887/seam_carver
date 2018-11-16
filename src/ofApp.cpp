@@ -9,6 +9,7 @@ void ofApp::setup(){
     gui.setup();
     gui.add(save.setup("save image"));
     gui.add(load.setup("load image"));
+    gui.add(popup.setup("popup image"));
     gui.add(target_width.setup("Set target width", 0));
     gui.add(target_height.setup("Set target height", 0));
 }
@@ -37,7 +38,10 @@ void ofApp::loadImage(){
 }
 
 void ofApp::popupImage(){
-    
+    ofGLFWWindowSettings settings;
+    settings.resizable = false;
+    settings.setSize(858, 480);
+    auto window = ofCreateWindow(settings);
 }
 
 //--------------------------------------------------------------

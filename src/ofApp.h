@@ -15,7 +15,7 @@ class ofApp : public ofBaseApp{
 
         ofImage test;
 
-        void buttonPressed();
+        void saveImage();
         void loadImage();
         void popupImage();
 
