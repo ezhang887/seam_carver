@@ -7,12 +7,15 @@ class ofApp : public ofBaseApp{
 
     private: 
         ofxPanel gui;
-        ofxButton button;
-        ofxInputField<int> input;
+        ofxButton save;
+        ofxButton load;
+        ofxInputField<int> target_height;
+        ofxInputField<int> target_width;
 
         ofImage test;
 
         void buttonPressed();
+        void loadImage();
 
     public:
         void setup();
