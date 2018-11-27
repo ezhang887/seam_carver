@@ -1,4 +1,6 @@
 #include "ofApp.h"
+#include "popupWindow.h"
+
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -41,7 +43,11 @@ void ofApp::popupImage(){
     ofGLFWWindowSettings settings;
     settings.resizable = false;
     settings.setSize(858, 480);
-    auto window = ofCreateWindow(settings);
+    shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
+
+    shared_ptr<PopupWindow> popup(new PopupWindow(test));
+
+    ofRunApp(window, popup);
 }
 
 //--------------------------------------------------------------

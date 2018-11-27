@@ -13,5 +13,7 @@ void PopupWindow::update(){
 }
 
 void PopupWindow::draw(){
-
+    if (image.isAllocated()){
+        image.draw(0,0);
+    }
 }

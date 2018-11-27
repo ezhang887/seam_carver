@@ -5,6 +5,9 @@ int main(){
     ofGLFWWindowSettings settings;
     settings.resizable = false;
     settings.setSize(1280, 720);
-    ofCreateWindow(settings);
-    return ofRunApp(new ofApp());
+    shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
+
+    shared_ptr<ofApp> mainApp(new ofApp);
+    ofRunApp(mainWindow, mainApp);
+    ofRunMainLoop();
 }
