@@ -2,11 +2,10 @@
 #include "popup.h"
 
 
-//--------------------------------------------------------------
-void ofApp::setup(){
-    save.addListener(this, &ofApp::saveImage);
-    load.addListener(this, &ofApp::loadImage);
-    popup.addListener(this, &ofApp::popupImage);
+void OfApp::setup(){
+    save.addListener(this, &OfApp::saveImage);
+    load.addListener(this, &OfApp::loadImage);
+    popup.addListener(this, &OfApp::popupImage);
     
     gui.setup();
     gui.add(save.setup("save image"));
@@ -16,7 +15,7 @@ void ofApp::setup(){
     gui.add(target_height.setup("Set target height", 0));
 }
 
-void ofApp::saveImage(){
+void OfApp::saveImage(){
     ofFileDialogResult result = ofSystemSaveDialog("saved.jpg", "Save");
     if(result.bSuccess) {
         string path = result.getPath();
@@ -26,7 +25,7 @@ void ofApp::saveImage(){
     
 }
 
-void ofApp::loadImage(){
+void OfApp::loadImage(){
     ofFileDialogResult result = ofSystemLoadDialog("Load file");
     if (result.bSuccess){
         string path = result.getPath();
@@ -39,10 +38,10 @@ void ofApp::loadImage(){
     }
 }
 
-void ofApp::popupImage(){
+void OfApp::popupImage(){
     ofGLFWWindowSettings settings;
     settings.resizable = false;
-    settings.setSize(858, 480);
+    settings.setSize(700, 700);
     shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
 
     shared_ptr<PopupWindow> popup(new PopupWindow(test));
@@ -50,71 +49,14 @@ void ofApp::popupImage(){
     ofRunApp(window, popup);
 }
 
-//--------------------------------------------------------------
-void ofApp::update(){
+void OfApp::update(){
 
 }
 
-//--------------------------------------------------------------
-void ofApp::draw(){
+void OfApp::draw(){
     ofBackgroundGradient(ofColor::white, ofColor::gray);
     gui.draw();
     if (test.isAllocated()){
         test.draw(500, 10);
     }
-}
-
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
 }
