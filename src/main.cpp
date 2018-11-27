@@ -1,5 +1,5 @@
 #include "ofMain.h"
-#include "ofApp.h"
+#include "of_app.h"
 
 int main(){
     ofGLFWWindowSettings settings;

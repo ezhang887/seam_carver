@@ -1,5 +1,5 @@
-#include "ofApp.h"
-#include "popupWindow.h"
+#include "of_app.h"
+#include "popup.h"
 
 
 //--------------------------------------------------------------

@@ -1,4 +1,4 @@
-#include "popupWindow.h"
+#include "popup.h"
 
 PopupWindow::PopupWindow(ofImage image){
     this->image = image;

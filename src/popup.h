@@ -1,5 +1,5 @@
-#ifndef POPUP_WINDOW_H
-#define POPUP_WINDOW_H
+#ifndef POPUP_H
+#define POPUP_H
 
 #include "ofMain.h"
 #include "ofxGui.h"
