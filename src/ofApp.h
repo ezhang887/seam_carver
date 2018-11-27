@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OF_APP_H
+#define OF_APP_H
 
 #include "ofMain.h"
 #include "ofxGui.h"
@@ -37,3 +38,5 @@ class ofApp : public ofBaseApp{
         void gotMessage(ofMessage msg);
 		
 };
+
+#endif
