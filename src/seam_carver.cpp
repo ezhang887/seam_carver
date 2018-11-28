@@ -88,10 +88,10 @@ vector<int> SeamCarver::find_h_seam(){
 
     //backtrack the path
     vector<int> rv(width);
-    for(int col=width-1, row = min_row_idx; col>=0; col--){
+    //we subtract the delta that brought us to this row after each iteration
+    //and decrement the column index by one
+    for(int col=width-1, row = min_row_idx; col>=0; col--, row-=bt[row][col]){
         rv[col] = row;
-        //we subtract the delta that brought us to this row
-        row -= bt[row][col];
     }
     return rv;
 }
