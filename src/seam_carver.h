@@ -18,8 +18,8 @@ struct Color{
 };
 
 class SeamCarver{
-    
-    private:
+
+    protected:
         bool transposed;
         int width;
         int height;

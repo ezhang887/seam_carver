@@ -7,6 +7,7 @@ SeamCarver::SeamCarver(vector<vector<Color>> image){
     this->height = image.size();
     this->width = image[0].size();
     this->energy = calculate_energy();
+    this->transposed = false;
 }
 
 vector<vector<double>> SeamCarver::calculate_energy(){
