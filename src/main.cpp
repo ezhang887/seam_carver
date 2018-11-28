@@ -1,7 +1,7 @@
 #include "ofMain.h"
 #include "of_app.h"
 
-int main(){
+int main(int argc, char** argv){
     ofGLFWWindowSettings settings;
     settings.resizable = false;
     settings.setSize(1280, 720);
