@@ -31,7 +31,7 @@ class SeamCarver{
 
         vector<vector<double>> calculate_energy();
         double pixel_energy(int row, int col);
-        int distance(Color a, Color b);
+        double distance(Color a, Color b);
 
         //returns a list of indexes of the current minimum energy seams
         vector<int> find_h_seam();

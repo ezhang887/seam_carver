@@ -30,10 +30,10 @@ double SeamCarver::pixel_energy(int row, int col){
         + distance(image[row][col-1], curr) + distance(image[row][col+1], curr);
 }
 
-int SeamCarver::distance(Color a, Color b){
-    int del_r = a.r-b.r;
-    int del_g = a.g-b.g;
-    int del_b = a.b-b.b;
+double SeamCarver::distance(Color a, Color b){
+    double del_r = a.r-b.r;
+    double del_g = a.g-b.g;
+    double del_b = a.b-b.b;
     return sqrt(del_r*del_r + del_g*del_g + del_b*del_b);
 }
 
