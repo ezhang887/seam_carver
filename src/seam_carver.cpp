@@ -158,3 +158,14 @@ void SeamCarver::transpose(){
     height = width;
     width = height;
 }
+
+vector<vector<Color>> SeamCarver::getCarved(int v_seams, int h_seams){
+    for(int i=0; i<v_seams; i++){
+        vector<int> v_seam = find_v_seam();
+        remove_v_seam(v_seam);
+    }
+    for(int i=0; i<h_seams; i++){
+        vector<int> h_seam = find_h_seam();
+        remove_h_seam(h_seam);
+    }
+}
