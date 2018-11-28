@@ -84,6 +84,7 @@ vector<int> SeamCarver::find_h_seam(){
     vector<int> rv;
     for(int col=width-1, row = min_row_idx; col>=0; col--){
         rv[i] = row;
+        //we subtract the delta that brought us to this row
         row -= bt[row][col];
     }
     return rv;
