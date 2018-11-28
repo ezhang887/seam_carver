@@ -20,10 +20,10 @@ class SeamCarver{
         vector<vector<Color>> image;
         //2d array representation of the image's energy values
         //the energy of each pixel is the distance between the RBG values of the pixel and it's neighbors
-        vector<vector<int>> energy;
+        vector<vector<double>> energy;
 
-        vector<vector<int>> calculate_energy();
-        int pixel_energy(int row, int col);
+        vector<vector<double>> calculate_energy();
+        double pixel_energy(int row, int col);
         int distance(Color a, Color b);
 
         //returns a list of indexes of the current minimum energy seams
