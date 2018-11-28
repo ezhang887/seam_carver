@@ -38,6 +38,11 @@ int SeamCarver::distance(Color a, Color b){
 }
 
 vector<int> SeamCarver::find_h_seam(){
+    //check to make sure we are not transposed
+    if (transposed){
+        transpose();
+    }
+
     //dp[i][j] = the min. cum. energy up to (i,j)
     vector<vector<double>> dp(height, vector<double>(width, 1e9));
     //bt[i][j] = the the relative delta of the horizontal index of the previous point on the min. cum. energy path leading up to (i,j)
@@ -82,7 +87,7 @@ vector<int> SeamCarver::find_h_seam(){
     }
 
     //backtrack the path
-    vector<int> rv;
+    vector<int> rv(width);
     for(int col=width-1, row = min_row_idx; col>=0; col--){
         rv[col] = row;
         //we subtract the delta that brought us to this row
@@ -91,12 +96,25 @@ vector<int> SeamCarver::find_h_seam(){
     return rv;
 }
 
+vector<int> SeamCarver::find_v_seam(){
+    if (!transposed){
+        transpose();
+    }
+    return find_h_seam();
+}
+
 void SeamCarver::remove_h_seam(vector<int> seam){
+    //check to make sure we are not transposed
+    if (transposed){
+        transpose();
+    }
+
     //decrement height
     height--;
     //create a new image 2d array without the specified seam
     vector<vector<Color>> new_image(height, vector<Color>(width, Color(0,0,0)));
     for(int col=0; col<width; col++){
+        //index of the row in the current col that is part of the given seam
         int curr_row_removed_idx = seam[col];
         for(int row=0; row<height; row++){
             if (row < curr_row_removed_idx){
@@ -114,10 +132,29 @@ void SeamCarver::remove_h_seam(vector<int> seam){
 }
 
 void SeamCarver::remove_v_seam(vector<int> seam){
-
+    if (!transposed){
+        transpose();
+    }
+    remove_h_seam(seam);
 }
 
-vector<int> SeamCarver::find_v_seam(){
-    vector<int> rv;
-    return rv;
+void SeamCarver::transpose(){
+    transposed = !transposed;
+    //new_image[col][row] = image[row][col]
+    vector<vector<Color>> new_image(width, vector<Color>(height, Color(0,0,0)));
+    //new_energy[col][row] = energy[row][col]
+    vector<vector<double>> new_energy(width, vector<double>(height, 0));
+    for(int row=0; row<height; row++){
+        for(int col=0; col<width; col++){
+            new_image[col][row] = image[row][col];
+            new_energy[col][row] = energy[row][col];
+        }
+    }
+    //update image + energy
+    image = new_image;
+    energy = new_energy;
+    //swap width and height member variables
+    int temp = height;
+    height = width;
+    width = height;
 }

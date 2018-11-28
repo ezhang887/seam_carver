@@ -20,6 +20,7 @@ struct Color{
 class SeamCarver{
     
     private:
+        bool transposed;
         int width;
         int height;
         //2d array representation of the image
@@ -38,6 +39,8 @@ class SeamCarver{
 
         void remove_h_seam(vector<int> seam);
         void remove_v_seam(vector<int> seam);
+
+        void transpose();
 
     public:
         SeamCarver(vector<vector<Color>> image);
