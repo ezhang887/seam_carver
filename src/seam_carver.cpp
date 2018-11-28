@@ -156,7 +156,7 @@ void SeamCarver::transpose(){
     //swap width and height member variables
     int temp = height;
     height = width;
-    width = height;
+    width = temp;
 }
 
 vector<vector<Color>> SeamCarver::getCarved(int v_seams, int h_seams){
