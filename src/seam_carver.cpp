@@ -26,15 +26,15 @@ double SeamCarver::pixel_energy(int row, int col){
         return 100000;
     }
     Color curr = image[row][col];
-    return sqrt(distance(image[row-1][col], curr) + distance(image[row+1][col], curr)
-        + distance(image[row][col-1], curr) + distance(image[row][col+1], curr));
+    return distance(image[row-1][col], curr) + distance(image[row+1][col], curr)
+        + distance(image[row][col-1], curr) + distance(image[row][col+1], curr);
 }
 
 int SeamCarver::distance(Color a, Color b){
     int del_r = a.r-b.r;
     int del_g = a.g-b.g;
     int del_b = a.b-b.b;
-    return del_r*del_r + del_g*del_g + del_b*del_b;
+    return sqrt(del_r*del_r + del_g*del_g + del_b*del_b);
 }
 
 vector<int> SeamCarver::find_h_seam(){
