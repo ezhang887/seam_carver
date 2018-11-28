@@ -55,6 +55,7 @@ vector<int> SeamCarver::find_h_seam(){
             if (next_col >= width){
                 continue;
             }
+            //compare with each neighbor in the next column
             for(int d_row = -1; d_row<=1; d_row++){
                 int next_row = row+d_row;
                 if (next_row < 0 || next_row >= height){
@@ -76,18 +77,44 @@ vector<int> SeamCarver::find_h_seam(){
         int curr = dp[row][width-1];
         if (curr < min_cum_energy){
             min_cum_energy = curr;
-            min_row_idx = i;
+            min_row_idx = row;
         }
     }
 
     //backtrack the path
     vector<int> rv;
     for(int col=width-1, row = min_row_idx; col>=0; col--){
-        rv[i] = row;
+        rv[col] = row;
         //we subtract the delta that brought us to this row
         row -= bt[row][col];
     }
     return rv;
+}
+
+void SeamCarver::remove_h_seam(vector<int> seam){
+    //decrement height
+    height--;
+    //create a new image 2d array without the specified seam
+    vector<vector<Color>> new_image(height, vector<Color>(width, Color(0,0,0)));
+    for(int col=0; col<width; col++){
+        int curr_row_removed_idx = seam[col];
+        for(int row=0; row<height; row++){
+            if (row < curr_row_removed_idx){
+                new_image[row][col] = image[row][col];
+            }
+            else{
+                new_image[row][col] = image[row][col+1];
+            }
+        }
+    }
+    //update member variable with new image
+    image = new_image;
+    //re-calculate energy array
+    energy = calculate_energy();
+}
+
+void SeamCarver::remove_v_seam(vector<int> seam){
+
 }
 
 vector<int> SeamCarver::find_v_seam(){

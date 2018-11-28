@@ -9,6 +9,12 @@ struct Color{
     int r;
     int g;
     int b;
+
+    Color(int _r, int _g, int _b){
+        r = _r;
+        g = _g;
+        b = _b;
+    }
 };
 
 class SeamCarver{
@@ -29,6 +35,9 @@ class SeamCarver{
         //returns a list of indexes of the current minimum energy seams
         vector<int> find_h_seam();
         vector<int> find_v_seam();
+
+        void remove_h_seam(vector<int> seam);
+        void remove_v_seam(vector<int> seam);
 
     public:
         SeamCarver(vector<vector<Color>> image);
