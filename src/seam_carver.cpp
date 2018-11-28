@@ -121,7 +121,7 @@ void SeamCarver::remove_h_seam(vector<int> seam){
                 new_image[row][col] = image[row][col];
             }
             else{
-                new_image[row][col] = image[row][col+1];
+                new_image[row][col] = image[row+1][col];
             }
         }
     }
