@@ -25,18 +25,23 @@ class TestCarver : public SeamCarver{
         double distance(Color a, Color b){
             return SeamCarver::distance(a,b);
         }
+        void transpose(){
+            return SeamCarver::transpose();
+        }
 };
 
 TEST_CASE("TEST"){
     vector<vector<Color>> image;
+    const int dim = 3;
+
     /*
      * (0,0,0), (0,1,1), (0,2,2)
      * (1,0,1), (1,1,2), (1,2,3)
      * (2,0,2), (2,1,3), (2,2,4)
      */
-    for(int i=0; i<4; i++){
+    for(int i=0; i<dim; i++){
         vector<Color> temp;
-        for(int j=0; j<4; j++){
+        for(int j=0; j<dim; j++){
             temp.push_back(Color(i,j,i+j));
         }
         image.push_back(temp);
@@ -45,8 +50,8 @@ TEST_CASE("TEST"){
 
     SECTION("Member Variables"){
         REQUIRE(t.tp() == false);
-        REQUIRE(t.w() == 4);
-        REQUIRE(t.h() == 4);
+        REQUIRE(t.w() == dim);
+        REQUIRE(t.h() == dim);
     }
 
     SECTION("distance()"){
@@ -58,7 +63,20 @@ TEST_CASE("TEST"){
         REQUIRE(t.distance(a,b) == sqrt(1+2*2+3*3));
     }
 
-    SECTION("energy"){
+    SECTION("transpose()"){
+
+    }
+
+    SECTION("energy (and calculate_energy() + pixel_energy()"){
         vector<vector<double>> energy = t.energy();
+        vector<vector<double>> expected = {{2*sqrt(2), 3*sqrt(2),2*sqrt(2)},{3*sqrt(2),4*sqrt(2),3*sqrt(2)},{2*sqrt(2),3*sqrt(2),2*sqrt(2)}};
+        REQUIRE(energy == expected);
+
+        for(int i=0; i<energy.size(); i++){
+            for(int j=0; j<energy.size(); j++){
+                cout << energy[i][j] << " ";
+            }
+            cout << endl;
+        }
     }
 }
