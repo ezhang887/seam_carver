@@ -39,6 +39,9 @@ void OfApp::loadImage(){
 }
 
 void OfApp::popupCarved(){
+    if (!image.isAllocated()){
+        return;
+    }
     ofPixels pixels = image.getPixels();
     ofPixels new_pixels;
     new_pixels.allocate(image.getWidth()/2, image.getHeight()/2, OF_IMAGE_COLOR);
@@ -50,13 +53,17 @@ void OfApp::popupCarved(){
 
     ofGLFWWindowSettings settings;
     settings.resizable = false;
-    settings.setSize(700, 700);
+    settings.setSize(image.getWidth()/2, image.getHeight()/2);
     shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
     shared_ptr<PopupWindow> popup(new PopupWindow(ofImage(new_pixels)));
     ofRunApp(window, popup);
 }
 
 void OfApp::popupSeams(){
+    if (!image.isAllocated()){
+        return;
+    }
+
     ofPixels pixels = image.getPixels();
     ofPixels new_pixels;
     new_pixels.allocate(image.getWidth(), image.getHeight(), OF_IMAGE_COLOR);
@@ -74,7 +81,7 @@ void OfApp::popupSeams(){
 
     ofGLFWWindowSettings settings;
     settings.resizable = false;
-    settings.setSize(700, 700);
+    settings.setSize(image.getWidth(), image.getHeight());
     shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
     shared_ptr<PopupWindow> popup(new PopupWindow(new_pixels));
     ofRunApp(window, popup);
