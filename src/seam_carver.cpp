@@ -23,12 +23,21 @@ vector<vector<double>> SeamCarver::calculate_energy(){
 }
 
 double SeamCarver::pixel_energy(int row, int col){
-    if (row == 0 || col == 0 || row == height-1 || col == width-1){
-        return 100000;
-    }
     Color curr = image[row][col];
-    return distance(image[row-1][col], curr) + distance(image[row+1][col], curr)
-        + distance(image[row][col-1], curr) + distance(image[row][col+1], curr);
+    double rv = 0;
+    if (row > 0){
+        rv += distance(image[row-1][col], curr);
+    }
+    if (row < height-1){
+        rv += distance(image[row+1][col], curr);
+    }
+    if (col > 0){
+        rv += distance(image[row][col-1], curr);
+    }
+    if (col < width-1){
+        rv += distance(image[row][col+1], curr);
+    }
+    return rv;
 }
 
 double SeamCarver::distance(Color a, Color b){
