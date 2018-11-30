@@ -7,18 +7,20 @@
 class OfApp : public ofBaseApp{
 
     private: 
-        ofxPanel gui;
+        ofxPanel panel;
         ofxButton save;
-        ofxButton popup;
+        ofxButton popup_carved;
+        ofxButton popup_seams;
         ofxButton load;
         ofxInputField<int> target_height;
         ofxInputField<int> target_width;
 
-        ofImage test;
+        ofImage image;
 
         void saveImage();
         void loadImage();
-        void popupImage();
+        void popupCarved();
+        void popupSeams();
 
     public:
         void setup();

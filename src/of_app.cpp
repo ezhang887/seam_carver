@@ -5,47 +5,78 @@
 void OfApp::setup(){
     save.addListener(this, &OfApp::saveImage);
     load.addListener(this, &OfApp::loadImage);
-    popup.addListener(this, &OfApp::popupImage);
+    popup_carved.addListener(this, &OfApp::popupCarved);
+    popup_seams.addListener(this, &OfApp::popupSeams);
     
-    gui.setup();
-    gui.add(save.setup("save image"));
-    gui.add(load.setup("load image"));
-    gui.add(popup.setup("popup image"));
-    gui.add(target_width.setup("Set target width", 0));
-    gui.add(target_height.setup("Set target height", 0));
+    panel.setup();
+    panel.add(save.setup("save image"));
+    panel.add(load.setup("load image"));
+    panel.add(popup_carved.setup("popup carved image"));
+    panel.add(popup_seams.setup("popup seams on image"));
+    panel.add(target_width.setup("Set target width", image.getWidth()));
+    panel.add(target_height.setup("Set target height", image.getHeight()));
 }
 
 void OfApp::saveImage(){
     ofFileDialogResult result = ofSystemSaveDialog("saved.jpg", "Save");
     if(result.bSuccess) {
         string path = result.getPath();
-        ofImage to_save(test);
+        ofImage to_save(image);
         to_save.save(path);
     }
-    
 }
 
 void OfApp::loadImage(){
     ofFileDialogResult result = ofSystemLoadDialog("Load file");
     if (result.bSuccess){
         string path = result.getPath();
-        test.load(path);
+        image.load(path);
         int max_h = 700;
         int max_w = 700;
-        double ratio = test.getHeight()/test.getWidth();
-        int bigger = max(test.getHeight(), test.getWidth());
-        test.resize(max_w * test.getWidth()/bigger,max_h * test.getHeight()/bigger);
+        int bigger = max(image.getHeight(), image.getWidth());
+        image.resize(max_w * image.getWidth()/bigger,max_h * image.getHeight()/bigger);
     }
 }
 
-void OfApp::popupImage(){
+void OfApp::popupCarved(){
+    ofPixels pixels = image.getPixels();
+    ofPixels new_pixels;
+    new_pixels.allocate(image.getWidth()/2, image.getHeight()/2, OF_IMAGE_COLOR);
+    for(int i=0; i<image.getWidth()/2; i++){
+        for(int j=0; j<image.getHeight()/2; j++){
+            new_pixels.setColor(i,j,image.getColor(i,j));
+        }
+    }
+
     ofGLFWWindowSettings settings;
     settings.resizable = false;
     settings.setSize(700, 700);
     shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
+    shared_ptr<PopupWindow> popup(new PopupWindow(ofImage(new_pixels)));
+    ofRunApp(window, popup);
+}
 
-    shared_ptr<PopupWindow> popup(new PopupWindow(test));
+void OfApp::popupSeams(){
+    ofPixels pixels = image.getPixels();
+    ofPixels new_pixels;
+    new_pixels.allocate(image.getWidth(), image.getHeight(), OF_IMAGE_COLOR);
+    for(int i=0; i<image.getWidth(); i++){
+        for(int j=0; j<image.getHeight(); j++){
+            if (i == j){
+                new_pixels.setColor(i,j,ofColor(255,0,0));
+            }
+            else{
+                new_pixels.setColor(i,j,image.getColor(i,j));
+            }
+        }
+    }
 
+
+    ofGLFWWindowSettings settings;
+    settings.resizable = false;
+    settings.setSize(700, 700);
+    shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
+    shared_ptr<PopupWindow> popup(new PopupWindow(new_pixels));
     ofRunApp(window, popup);
 }
 
@@ -55,8 +86,8 @@ void OfApp::update(){
 
 void OfApp::draw(){
     ofBackgroundGradient(ofColor::white, ofColor::gray);
-    gui.draw();
-    if (test.isAllocated()){
-        test.draw(500, 10);
+    panel.draw();
+    if (image.isAllocated()){
+        image.draw(500, 10);
     }
 }
