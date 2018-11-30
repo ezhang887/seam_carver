@@ -11,3 +11,13 @@ endif
 
 # call the project makefile!
 include $(OF_ROOT)/libs/openFrameworksCompiled/project/makefileCommon/compile.project.mk
+
+CC = g++
+CFLAGS = -std=c++17
+TEST = unittest
+
+$(TEST): src/seam_carver.cpp test/test.cpp
+	$(CC) $(CFLAGS) -o $(TEST) src/seam_carver.cpp test/test.cpp
+
+clean_test:
+	rm -f $(TEST)
