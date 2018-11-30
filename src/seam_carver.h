@@ -19,7 +19,11 @@ struct Color{
 
 class SeamCarver{
 
-    protected:
+#ifdef U_TEST
+    friend class TestCarver;
+#endif
+
+    private:
         bool transposed;
         int width;
         int height;

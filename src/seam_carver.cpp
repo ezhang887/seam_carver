@@ -1,6 +1,10 @@
 #include "seam_carver.h"
 
 #include <cmath>
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 SeamCarver::SeamCarver(vector<vector<Color>> image){
     this->image = image;
@@ -14,7 +18,7 @@ vector<vector<double>> SeamCarver::calculate_energy(){
     vector<vector<double>> rv;
     for(int row=0; row<height; row++){
         vector<double> temp;
-        for(int col=0; col<height; col++){
+        for(int col=0; col<width; col++){
             temp.push_back(pixel_energy(row, col));
         }
         rv.push_back(temp);
@@ -48,11 +52,6 @@ double SeamCarver::distance(Color a, Color b){
 }
 
 vector<int> SeamCarver::find_h_seam(){
-    //check to make sure we are not transposed
-    if (transposed){
-        transpose();
-    }
-
     //dp[i][j] = the min. cum. energy up to (i,j)
     vector<vector<double>> dp(height, vector<double>(width, 1e9));
     //bt[i][j] = the the relative delta of the horizontal index of the previous point on the min. cum. energy path leading up to (i,j)
@@ -110,15 +109,12 @@ vector<int> SeamCarver::find_v_seam(){
     if (!transposed){
         transpose();
     }
-    return find_h_seam();
+    auto rv = find_h_seam();
+    transpose();
+    return rv;
 }
 
 void SeamCarver::remove_h_seam(vector<int> seam){
-    //check to make sure we are not transposed
-    if (transposed){
-        transpose();
-    }
-
     //decrement height
     height--;
     //create a new image 2d array without the specified seam
@@ -146,6 +142,7 @@ void SeamCarver::remove_v_seam(vector<int> seam){
         transpose();
     }
     remove_h_seam(seam);
+    transpose();
 }
 
 void SeamCarver::transpose(){

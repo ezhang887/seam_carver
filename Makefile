@@ -13,7 +13,7 @@ endif
 include $(OF_ROOT)/libs/openFrameworksCompiled/project/makefileCommon/compile.project.mk
 
 CC = g++
-CFLAGS = -g -std=c++17
+CFLAGS = -g -std=c++17 -DU_TEST
 TEST = unittest
 
 run_test: $(TEST)
