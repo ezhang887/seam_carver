@@ -52,7 +52,9 @@ double SeamCarver::distance(Color a, Color b){
 }
 
 vector<int> SeamCarver::find_h_seam(){
-    //dp[i][j] = the min. cum. energy up to (i,j)
+    //dp[i][j] = the min. cum. energy on a seam up to (i,j)
+    //dp[i][0] = energy
+    //dp[i][j+1] = min(dp[i][j+1], dp[i][j]+dp[i+k][j+1]) for k = (-1,0,1)
     vector<vector<double>> dp(height, vector<double>(width, 1e9));
     //bt[i][j] = the the relative delta of the horizontal index of the previous point on the min. cum. energy path leading up to (i,j)
     vector<vector<int>> bt(height, vector<int>(width, 0));
