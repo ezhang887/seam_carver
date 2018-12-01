@@ -17,12 +17,15 @@ class OfApp : public ofBaseApp{
 
         ofImage image;
 
+        shared_ptr<ofAppBaseWindow> main_window;
+
         void saveImage();
         void loadImage();
         void popupCarved();
         void popupSeams();
 
     public:
+        OfApp(shared_ptr<ofAppBaseWindow>& main_window);
         void setup();
         void update();
         void draw();

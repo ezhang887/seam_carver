@@ -28,10 +28,11 @@ void PopupWindow::saveImage(){
     }
 }
 
-void runPopupWindow(ofImage image){
+void runPopupWindow(ofImage image, shared_ptr<ofAppBaseWindow>& main_window){
     ofGLFWWindowSettings settings;
     settings.resizable = false;
     settings.setSize(image.getWidth(), image.getHeight() + 20);
+    settings.shareContextWith = main_window;
 
     shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
     shared_ptr<PopupWindow> popup(new PopupWindow(image));

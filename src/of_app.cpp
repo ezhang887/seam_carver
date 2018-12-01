@@ -3,6 +3,9 @@
 #include "seam_carver.h"
 #include "image_utils.h"
 
+OfApp::OfApp(shared_ptr<ofAppBaseWindow>& main_window){
+    this->main_window = main_window;
+}
 
 void OfApp::setup(){
     save.addListener(this, &OfApp::saveImage);
@@ -48,7 +51,7 @@ void OfApp::popupCarved(){
     sc.carve_h_seams(150);
     ofImage new_image = ImageUtils::raw_to_of(sc.getImage());
 
-    runPopupWindow(new_image);
+    runPopupWindow(new_image, main_window);
 }
 
 void OfApp::popupSeams(){
@@ -61,7 +64,7 @@ void OfApp::popupSeams(){
     vector<vector<int>> v_seams = sc.carve_v_seams(50);
     ofImage new_image = ImageUtils::draw_seams(ImageUtils::of_to_raw(image), h_seams, v_seams);
 
-    runPopupWindow(new_image);
+    runPopupWindow(new_image, main_window);
 }
 
 void OfApp::update(){
@@ -69,7 +72,7 @@ void OfApp::update(){
 }
 
 void OfApp::draw(){
-    ofBackgroundGradient(ofColor::white, ofColor::gray);
+    //ofBackgroundGradient(ofColor::white, ofColor::gray);
     panel.draw();
     if (image.isAllocated()){
         image.draw(500, 10);

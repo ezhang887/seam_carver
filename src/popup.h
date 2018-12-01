@@ -21,6 +21,6 @@ class PopupWindow : public ofBaseApp{
 
 };
 
-void runPopupWindow(ofImage image);
+void runPopupWindow(ofImage image, shared_ptr<ofAppBaseWindow>& main_window);
 
 #endif

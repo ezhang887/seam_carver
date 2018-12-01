@@ -7,7 +7,7 @@ int main(int argc, char** argv){
     settings.setSize(1280, 720);
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
 
-    shared_ptr<OfApp> mainApp(new OfApp());
+    shared_ptr<OfApp> mainApp(new OfApp(mainWindow));
     ofRunApp(mainWindow, mainApp);
     ofRunMainLoop();
 }
