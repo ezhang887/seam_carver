@@ -1,4 +1,5 @@
 #include "image_utils.h"
+#include "assert.h"
 
 ofImage ImageUtils::raw_to_of(vector<vector<Color>> image){
     const int height = image.size();
@@ -8,7 +9,7 @@ ofImage ImageUtils::raw_to_of(vector<vector<Color>> image){
     for(int i=0; i<height; i++){
         for(int j=0; j<width; j++){
             ofColor color(image[i][j].r, image[i][j].g, image[i][j].b);
-            pixels.setColor(i,j,color);
+            pixels.setColor(j,i,color);
         }
     }
     return ofImage(pixels);
@@ -40,16 +41,18 @@ ofImage ImageUtils::draw_seams(vector<vector<Color>> image, vector<vector<int>> 
     for(auto seam : v_seams){
         assert(seam.size() == height);
     }
-    for(auto seam : h_seams){
-        for(int col=0; col<width; col++){
+    for(int i=0; i<h_seams.size(); i++){
+        auto seam = h_seams[i];
+        for(int col=0; col<seam.size(); col++){
             int row = seam[col];
-            image[row][col] = Color(255, 0, 0);
+            image[row+i][col] = Color(255, 0, 0);
         }
     }
-    for(auto seam : v_seams){
-        for(int row=0; row<height; row++){
+    for(int i=0; i<v_seams.size(); i++){
+        auto seam = v_seams[i];
+        for(int row=0; row<seam.size(); row++){
             int col = seam[row];
-            image[row][col] = Color(255, 0, 0);
+            image[row][col+i] = Color(0, 0, 255);
         }
     }
     return raw_to_of(image);

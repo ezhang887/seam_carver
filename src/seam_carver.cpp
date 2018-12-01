@@ -10,23 +10,10 @@ SeamCarver::SeamCarver(vector<vector<Color>> image){
     this->image = image;
     this->height = image.size();
     this->width = image[0].size();
-    this->energy = calculate_energy();
     this->transposed = false;
 }
 
-vector<vector<double>> SeamCarver::calculate_energy(){
-    vector<vector<double>> rv;
-    for(int row=0; row<height; row++){
-        vector<double> temp;
-        for(int col=0; col<width; col++){
-            temp.push_back(pixel_energy(row, col));
-        }
-        rv.push_back(temp);
-    }
-    return rv;
-}
-
-double SeamCarver::pixel_energy(int row, int col){
+double SeamCarver::energy(int row, int col){
     Color curr = image[row][col];
     double rv = 0;
     if (row > 0){
@@ -58,10 +45,9 @@ vector<int> SeamCarver::find_h_seam(){
     vector<vector<double>> dp(height, vector<double>(width, 1e9));
     //bt[i][j] = the the relative delta of the horizontal index of the previous point on the min. cum. energy path leading up to (i,j)
     vector<vector<int>> bt(height, vector<int>(width, 0));
-
     //base case: 1st col is the default energy
     for(int row=0; row<height; row++){
-        dp[row][0] = energy[row][0];
+        dp[row][0] = energy(row, 0);
     }
 
     //update dp table
@@ -77,8 +63,8 @@ vector<int> SeamCarver::find_h_seam(){
                 if (next_row < 0 || next_row >= height){
                     continue;
                 }
-                if (dp[row][col] + energy[next_row][next_col] < dp[next_row][next_col]){
-                    dp[next_row][next_col] = dp[row][col] + energy[next_row][next_col];
+                if (dp[row][col] + energy(next_row,next_col) < dp[next_row][next_col]){
+                    dp[next_row][next_col] = dp[row][col] + energy(next_row,next_col);
                     bt[next_row][next_col] = d_row;
                 }
             }
@@ -135,8 +121,6 @@ void SeamCarver::remove_h_seam(vector<int> seam){
     }
     //update member variable with new image
     image = new_image;
-    //re-calculate energy array
-    energy = calculate_energy();
 }
 
 void SeamCarver::remove_v_seam(vector<int> seam){
@@ -151,30 +135,42 @@ void SeamCarver::transpose(){
     transposed = !transposed;
     //new_image[col][row] = image[row][col]
     vector<vector<Color>> new_image(width, vector<Color>(height, Color(0,0,0)));
-    //new_energy[col][row] = energy[row][col]
-    vector<vector<double>> new_energy(width, vector<double>(height, 0));
     for(int row=0; row<height; row++){
         for(int col=0; col<width; col++){
             new_image[col][row] = image[row][col];
-            new_energy[col][row] = energy[row][col];
         }
     }
-    //update image + energy
+    //update image
     image = new_image;
-    energy = new_energy;
     //swap width and height member variables
     int temp = height;
     height = width;
     width = temp;
 }
 
-vector<vector<Color>> SeamCarver::getCarved(int v_seams, int h_seams){
-    for(int i=0; i<v_seams; i++){
-        vector<int> v_seam = find_v_seam();
-        remove_v_seam(v_seam);
+vector<vector<int>> SeamCarver::carve_h_seams(int num_seams){
+    vector<vector<int>> rv;
+    for(int i=0; i<num_seams; i++){
+        vector<int> seam = find_h_seam();
+        rv.push_back(seam);
+        remove_h_seam(seam);
     }
-    for(int i=0; i<h_seams; i++){
-        vector<int> h_seam = find_h_seam();
-        remove_h_seam(h_seam);
+    return rv;
+}
+
+vector<vector<int>> SeamCarver::carve_v_seams(int num_seams){
+    vector<vector<int>> rv;
+    for(int i=0; i<num_seams; i++){
+        vector<int> seam = find_v_seam();
+        rv.push_back(seam);
+        remove_v_seam(seam);
     }
+    return rv;
+}
+
+vector<vector<Color>> SeamCarver::getImage(){
+    if (transposed){ 
+        transpose();
+    }
+    return image;
 }

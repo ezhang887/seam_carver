@@ -8,11 +8,15 @@
 class PopupWindow : public ofBaseApp{
 
     private:
+        ofxButton save;
         ofImage image;
+
+        void saveImage();
 
     public:
         PopupWindow(ofImage image);
         void setup();
+        void update();
         void draw();
 
 };

@@ -23,18 +23,14 @@ class SeamCarver{
     friend class TestCarver;
 #endif
 
-    private:
+    public:
         bool transposed;
         int width;
         int height;
         //2d array representation of the image
         vector<vector<Color>> image;
-        //2d array representation of the image's energy values
-        //the energy of each pixel is the distance between the RBG values of the pixel and it's neighbors
-        vector<vector<double>> energy;
 
-        vector<vector<double>> calculate_energy();
-        double pixel_energy(int row, int col);
+        double energy(int row, int col);
         double distance(Color a, Color b);
 
         //returns a list of indexes of the current minimum energy seams
@@ -49,7 +45,10 @@ class SeamCarver{
     public:
         SeamCarver(vector<vector<Color>> image);
 
-        vector<vector<Color>> getCarved(int v_seams, int h_seams);
+        vector<vector<int>> carve_h_seams(int num_seams);
+        vector<vector<int>> carve_v_seams(int num_seams);
+
+        vector<vector<Color>> getImage();
 
 };
 
