@@ -40,6 +40,17 @@ ofImage ImageUtils::draw_seams(vector<vector<Color>> image, vector<vector<int>> 
     for(auto seam : v_seams){
         assert(seam.size() == height);
     }
-    ofImage rv;
-    return rv;
+    for(auto seam : h_seams){
+        for(int col=0; col<width; col++){
+            int row = seam[col];
+            image[row][col] = Color(255, 0, 0);
+        }
+    }
+    for(auto seam : v_seams){
+        for(int row=0; row<height; row++){
+            int col = seam[row];
+            image[row][col] = Color(255, 0, 0);
+        }
+    }
+    return raw_to_of(image);
 }
