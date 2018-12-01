@@ -13,9 +13,10 @@ class PopupWindow : public ofBaseApp{
     public:
         PopupWindow(ofImage image);
         void setup();
-        void update();
         void draw();
 
 };
+
+void runPopupWindow(ofImage image);
 
 #endif
