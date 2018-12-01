@@ -1,6 +1,6 @@
-#include "image_converter.h"
+#include "image_utils.h"
 
-ofImage ImageConverter::raw_to_of(vector<vector<Color>> image){
+ofImage ImageUtils::raw_to_of(vector<vector<Color>> image){
     const int height = image.size();
     const int width = image[0].size();
     ofPixels pixels;
@@ -14,7 +14,7 @@ ofImage ImageConverter::raw_to_of(vector<vector<Color>> image){
     return ofImage(pixels);
 }
 
-vector<vector<Color>> of_to_raw(ofImage image){
+vector<vector<Color>> ImageUtils::of_to_raw(ofImage image){
     const int height = image.getHeight();
     const int width = image.getWidth();
     vector<vector<Color>> rv;
@@ -28,5 +28,18 @@ vector<vector<Color>> of_to_raw(ofImage image){
         }
         rv.push_back(temp);
     }
+    return rv;
+}
+
+ofImage ImageUtils::draw_seams(vector<vector<Color>> image, vector<vector<int>> h_seams, vector<vector<int>> v_seams){
+    int height = image.size();
+    int width = image[0].size();
+    for(auto seam : h_seams){
+        assert(seam.size() == width);
+    }
+    for(auto seam : v_seams){
+        assert(seam.size() == height);
+    }
+    ofImage rv;
     return rv;
 }
