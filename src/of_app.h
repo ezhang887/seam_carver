@@ -8,7 +8,6 @@ class OfApp : public ofBaseApp{
 
     private: 
         ofxPanel panel;
-        ofxButton save;
         ofxButton popup_carved;
         ofxButton popup_seams;
         ofxButton load;
@@ -19,7 +18,6 @@ class OfApp : public ofBaseApp{
 
         shared_ptr<ofAppBaseWindow> main_window;
 
-        void saveImage();
         void loadImage();
         void popupCarved();
         void popupSeams();

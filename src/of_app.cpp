@@ -8,27 +8,16 @@ OfApp::OfApp(shared_ptr<ofAppBaseWindow>& main_window){
 }
 
 void OfApp::setup(){
-    save.addListener(this, &OfApp::saveImage);
     load.addListener(this, &OfApp::loadImage);
     popup_carved.addListener(this, &OfApp::popupCarved);
     popup_seams.addListener(this, &OfApp::popupSeams);
     
     panel.setup();
-    panel.add(save.setup("save image"));
     panel.add(load.setup("load image"));
     panel.add(popup_carved.setup("popup carved image"));
     panel.add(popup_seams.setup("popup seams on image"));
     panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(target_height.setup("Set target height", image.getHeight()));
-}
-
-void OfApp::saveImage(){
-    ofFileDialogResult result = ofSystemSaveDialog("saved.jpg", "Save");
-    if(result.bSuccess) {
-        string path = result.getPath();
-        ofImage to_save(image);
-        to_save.save(path);
-    }
 }
 
 void OfApp::loadImage(){
