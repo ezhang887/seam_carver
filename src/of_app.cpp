@@ -1,5 +1,7 @@
 #include "of_app.h"
 #include "popup.h"
+#include "seam_carver.h"
+#include "image_utils.h"
 
 
 void OfApp::setup(){
@@ -42,16 +44,11 @@ void OfApp::popupCarved(){
     if (!image.isAllocated()){
         return;
     }
-    ofPixels pixels = image.getPixels();
-    ofPixels new_pixels;
-    new_pixels.allocate(image.getWidth()/2, image.getHeight()/2, OF_IMAGE_COLOR);
-    for(int i=0; i<image.getWidth()/2; i++){
-        for(int j=0; j<image.getHeight()/2; j++){
-            new_pixels.setColor(i,j,image.getColor(i,j));
-        }
-    }
-    
-    runPopupWindow(new_pixels);
+    SeamCarver sc(ImageUtils::of_to_raw(image));
+    sc.carve_h_seams(150);
+    ofImage new_image = ImageUtils::raw_to_of(sc.getImage());
+
+    runPopupWindow(new_image);
 }
 
 void OfApp::popupSeams(){
@@ -59,21 +56,12 @@ void OfApp::popupSeams(){
         return;
     }
 
-    ofPixels pixels = image.getPixels();
-    ofPixels new_pixels;
-    new_pixels.allocate(image.getWidth(), image.getHeight(), OF_IMAGE_COLOR);
-    for(int i=0; i<image.getWidth(); i++){
-        for(int j=0; j<image.getHeight(); j++){
-            if (i == j){
-                new_pixels.setColor(i,j,ofColor(255,0,0));
-            }
-            else{
-                new_pixels.setColor(i,j,image.getColor(i,j));
-            }
-        }
-    }
+    SeamCarver sc(ImageUtils::of_to_raw(image));
+    vector<vector<int>> h_seams = sc.carve_h_seams(0);
+    vector<vector<int>> v_seams = sc.carve_v_seams(50);
+    ofImage new_image = ImageUtils::draw_seams(ImageUtils::of_to_raw(image), h_seams, v_seams);
 
-    runPopupWindow(new_pixels);
+    runPopupWindow(new_image);
 }
 
 void OfApp::update(){
