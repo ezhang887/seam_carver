@@ -37,7 +37,8 @@ void OfApp::popupCarved(){
         return;
     }
     SeamCarver sc(ImageUtils::of_to_raw(image));
-    sc.carve_h_seams(150);
+    sc.carve_h_seams(image.getHeight()-target_height);
+    sc.carve_v_seams(image.getWidth()-target_width);
     ofImage new_image = ImageUtils::raw_to_of(sc.getImage());
 
     runPopupWindow(new_image, main_window);
@@ -47,10 +48,9 @@ void OfApp::popupSeams(){
     if (!image.isAllocated()){
         return;
     }
-
     SeamCarver sc(ImageUtils::of_to_raw(image));
-    vector<vector<int>> h_seams = sc.carve_h_seams(50);
-    vector<vector<int>> v_seams = sc.carve_v_seams(50);
+    vector<vector<int>> h_seams = sc.carve_h_seams(image.getHeight()-target_height);
+    vector<vector<int>> v_seams = sc.carve_v_seams(image.getWidth()-target_width);
     ofImage new_image = ImageUtils::draw_seams(ImageUtils::of_to_raw(image), h_seams, v_seams);
 
     runPopupWindow(new_image, main_window);
@@ -61,7 +61,7 @@ void OfApp::update(){
 }
 
 void OfApp::draw(){
-    //ofBackgroundGradient(ofColor::white, ofColor::gray);
+    ofBackgroundGradient(ofColor::white, ofColor::gray);
     panel.draw();
     if (image.isAllocated()){
         image.draw(500, 10);
