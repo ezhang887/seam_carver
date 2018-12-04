@@ -3,6 +3,7 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "ofxCv.h"
 
 class OfApp : public ofBaseApp{
 
@@ -17,6 +18,8 @@ class OfApp : public ofBaseApp{
         ofImage image;
 
         shared_ptr<ofAppBaseWindow> main_window;
+
+        ofxCv::ObjectFinder face_detector;
 
         void loadImage();
         void popupCarved();

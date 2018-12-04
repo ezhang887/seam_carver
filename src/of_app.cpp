@@ -18,6 +18,8 @@ void OfApp::setup(){
     panel.add(popup_seams.setup("popup seams on image"));
     panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(target_height.setup("Set target height", image.getHeight()));
+
+    face_detector.setup("haarcascade_frontalface_default.xml");
 }
 
 void OfApp::loadImage(){
@@ -30,6 +32,7 @@ void OfApp::loadImage(){
         int bigger = max(image.getHeight(), image.getWidth());
         image.resize(max_w * image.getWidth()/bigger,max_h * image.getHeight()/bigger);
     }
+    face_detector.update(image);
 }
 
 void OfApp::popupCarved(){
@@ -77,5 +80,12 @@ void OfApp::draw(){
     panel.draw();
     if (image.isAllocated()){
         image.draw(500, 10);
+	for(int i = 0; i < face_detector.size(); i++){
+            ofNoFill();
+            ofRectangle object = face_detector.getObject(i);
+            object.setX(500 + object.getX());
+            object.setY(10 + object.getY());
+            ofDrawRectangle(object);
+	}
     }
 }
