@@ -1,16 +1,27 @@
 #include "seam_carver.h"
 
 #include <cmath>
+#include <cassert>
+#include <algorithm>
 #include <iostream>
 
 using std::cout;
 using std::endl;
+using std::min;
+using std::max;
 
 SeamCarver::SeamCarver(vector<vector<Color>> image){
     this->image = image;
     this->height = image.size();
     this->width = image[0].size();
     this->transposed = false;
+}
+
+Color SeamCarver::average(Color a, Color b){
+    int r_avg = (a.r + b.r)/2;
+    int g_avg = (a.g + b.g)/2;
+    int b_avg = (a.b + b.b)/2;
+    return Color(r_avg, g_avg, b_avg);
 }
 
 double SeamCarver::energy(int row, int col){
@@ -137,8 +148,11 @@ void SeamCarver::add_h_seam(vector<int> seam){
     for(int col=0; col<width; col++){
         int curr_row_min_idx = seam[col];
         for(int row=0; row<height; row++){
-            if (row < curr_row_min_idx){
+            if (row == 0 || row <= curr_row_min_idx){
                 new_image[row][col] = image[row][col];
+            }
+            else if (row == curr_row_min_idx){
+                new_image[row][col] = average(image[row-1][col], image[row+1][col]);
             }
             else{
                 new_image[row][col] = image[row-1][col];
@@ -174,6 +188,7 @@ void SeamCarver::transpose(){
 }
 
 vector<vector<int>> SeamCarver::carve_h_seams(int num_seams){
+    assert(num_seams > 0);
     vector<vector<int>> rv;
     for(int i=0; i<num_seams; i++){
         vector<int> seam = find_h_seam();
@@ -184,6 +199,7 @@ vector<vector<int>> SeamCarver::carve_h_seams(int num_seams){
 }
 
 vector<vector<int>> SeamCarver::carve_v_seams(int num_seams){
+    assert(num_seams > 0);
     vector<vector<int>> rv;
     for(int i=0; i<num_seams; i++){
         vector<int> seam = find_v_seam();
@@ -194,20 +210,30 @@ vector<vector<int>> SeamCarver::carve_v_seams(int num_seams){
 }
 
 vector<vector<int>> SeamCarver::add_h_seams(int num_seams){
-    vector<vector<int>> rv;
-    for(int i=0; i<num_seams; i++){
-        vector<int> seam = find_h_seam();
-        rv.push_back(seam);
+    assert(num_seams > 0);
+    auto original(image);
+    int original_height = height;
+    int original_width = width;
+    vector<vector<int>> rv = carve_h_seams(num_seams);
+    image = original;
+    height = original_height;
+    width = original_width;
+    for(auto seam : rv){
         add_h_seam(seam);
     }
     return rv;
 }
 
 vector<vector<int>> SeamCarver::add_v_seams(int num_seams){
-    vector<vector<int>> rv;
-    for(int i=0; i<num_seams; i++){
-        vector<int> seam = find_v_seam();
-        rv.push_back(seam);
+    assert(num_seams > 0);
+    auto original(image);
+    int original_height = height;
+    int original_width = width;
+    vector<vector<int>> rv = carve_v_seams(num_seams);
+    image = original;
+    height = original_height;
+    width = original_width;
+    for(auto seam : rv){
         add_v_seam(seam);
     }
     return rv;

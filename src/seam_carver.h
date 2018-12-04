@@ -30,6 +30,7 @@ class SeamCarver{
         //2d array representation of the image
         vector<vector<Color>> image;
 
+        Color average(Color a, Color b);
         double energy(int row, int col);
         double distance(Color a, Color b);
 
