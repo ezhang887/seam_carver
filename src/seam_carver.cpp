@@ -131,6 +131,31 @@ void SeamCarver::remove_v_seam(vector<int> seam){
     transpose();
 }
 
+void SeamCarver::add_h_seam(vector<int> seam){
+    height++;
+    vector<vector<Color>> new_image(height, vector<Color>(width, Color(0,0,0)));
+    for(int col=0; col<width; col++){
+        int curr_row_min_idx = seam[col];
+        for(int row=0; row<height; row++){
+            if (row < curr_row_min_idx){
+                new_image[row][col] = image[row][col];
+            }
+            else{
+                new_image[row][col] = image[row-1][col];
+            }
+        }
+    }
+    image = new_image;
+}
+
+void SeamCarver::add_v_seam(vector<int> seam){
+    if (!transposed){
+        transpose();
+    }
+    add_h_seam(seam);
+    transpose();
+}
+
 void SeamCarver::transpose(){
     transposed = !transposed;
     //new_image[col][row] = image[row][col]
@@ -164,6 +189,26 @@ vector<vector<int>> SeamCarver::carve_v_seams(int num_seams){
         vector<int> seam = find_v_seam();
         rv.push_back(seam);
         remove_v_seam(seam);
+    }
+    return rv;
+}
+
+vector<vector<int>> SeamCarver::add_h_seams(int num_seams){
+    vector<vector<int>> rv;
+    for(int i=0; i<num_seams; i++){
+        vector<int> seam = find_h_seam();
+        rv.push_back(seam);
+        add_h_seam(seam);
+    }
+    return rv;
+}
+
+vector<vector<int>> SeamCarver::add_v_seams(int num_seams){
+    vector<vector<int>> rv;
+    for(int i=0; i<num_seams; i++){
+        vector<int> seam = find_v_seam();
+        rv.push_back(seam);
+        add_v_seam(seam);
     }
     return rv;
 }

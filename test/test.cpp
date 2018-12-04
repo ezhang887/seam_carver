@@ -22,9 +22,6 @@ class TestCarver : public SeamCarver{
         vector<vector<Color>> img(){
             return SeamCarver::image;
         }
-        vector<vector<double>> energy(){
-            return SeamCarver::energy;
-        }
         double distance(Color a, Color b){
             return SeamCarver::distance(a,b);
         }
@@ -84,19 +81,6 @@ TEST_CASE("TEST"){
         REQUIRE(t.tp() == true);
         REQUIRE(t.w() == rows);
         REQUIRE(t.h() == cols);
-    }
-
-    SECTION("energy (and calculate_energy() + pixel_energy()"){
-        vector<vector<double>> energy = t.energy();
-        vector<vector<double>> expected = {{2*sqrt(2), 3*sqrt(2), 3*sqrt(2), 2*sqrt(2)},{3*sqrt(2),4*sqrt(2),4*sqrt(2),3*sqrt(2)},{2*sqrt(2),3*sqrt(2),3*sqrt(2),2*sqrt(2)}};
-        REQUIRE(energy == expected);
-
-        for(int i=0; i<energy.size(); i++){
-            for(int j=0; j<energy[i].size(); j++){
-                cout << energy[i][j] << " ";
-            }
-            cout << endl;
-        }
     }
 
     SECTION("check horizontal seam"){

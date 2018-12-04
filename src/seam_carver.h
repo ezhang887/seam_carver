@@ -39,6 +39,8 @@ class SeamCarver{
 
         void remove_h_seam(vector<int> seam);
         void remove_v_seam(vector<int> seam);
+        void add_h_seam(vector<int> seam);
+        void add_v_seam(vector<int> seam);
 
         void transpose();
 
@@ -47,6 +49,8 @@ class SeamCarver{
 
         vector<vector<int>> carve_h_seams(int num_seams);
         vector<vector<int>> carve_v_seams(int num_seams);
+        vector<vector<int>> add_h_seams(int num_seams);
+        vector<vector<int>> add_v_seams(int num_seams);
 
         vector<vector<Color>> getImage();
 
