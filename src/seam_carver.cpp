@@ -148,10 +148,10 @@ void SeamCarver::add_h_seam(vector<int> seam){
     for(int col=0; col<width; col++){
         int curr_row_min_idx = seam[col];
         for(int row=0; row<height; row++){
-            if (row == 0 || row <= curr_row_min_idx){
+            if (row == 0 || row < curr_row_min_idx){
                 new_image[row][col] = image[row][col];
             }
-            else if (row == curr_row_min_idx){
+            else if (row == curr_row_min_idx || row == curr_row_min_idx+1){
                 new_image[row][col] = average(image[row-1][col], image[row+1][col]);
             }
             else{

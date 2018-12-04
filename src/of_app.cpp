@@ -64,9 +64,27 @@ void OfApp::popupSeams(){
         return;
     }
     SeamCarver sc(ImageUtils::of_to_raw(image));
-    vector<vector<int>> h_seams = sc.carve_h_seams(image.getHeight()-target_height);
-    vector<vector<int>> v_seams = sc.carve_v_seams(image.getWidth()-target_width);
-    ofImage new_image = ImageUtils::draw_seams(ImageUtils::of_to_raw(image), h_seams, v_seams);
+    int diff_height = image.getHeight()-target_height;
+    int diff_width = image.getWidth()-target_width;
+    vector<vector<int>> h_seams;
+    vector<vector<int>> v_seams;
+    bool added_h = false;
+    bool added_v = false;
+    if (diff_height > 0){
+        h_seams = sc.carve_h_seams(diff_height);
+    }
+    else{
+        added_h = true;
+        h_seams = sc.add_h_seams(-diff_height);
+    }
+    if (diff_width > 0){
+        v_seams = sc.carve_v_seams(diff_width);
+    }
+    else{
+        added_v = true;
+        v_seams = sc.add_v_seams(-diff_width);
+    }
+    ofImage new_image = ImageUtils::draw_seams(ImageUtils::of_to_raw(image), h_seams, v_seams, added_h, added_v);
 
     runPopupWindow(new_image, main_window);
 }
