@@ -20,15 +20,18 @@ struct Color{
 class SeamCarver{
 
 #ifdef U_TEST
+    //Used for unit testing private members, see test/test.cpp
     friend class TestCarver;
 #endif
 
-    public:
+    private:
         bool transposed;
         int width;
         int height;
         //2d array representation of the image
         vector<vector<Color>> image;
+        vector<vector<Color>> original_image;
+        vector<vector<Color>> drawn_image;
 
         Color average(Color a, Color b);
         double energy(int row, int col);
@@ -54,6 +57,8 @@ class SeamCarver{
         vector<vector<int>> add_v_seams(int num_seams);
 
         vector<vector<Color>> getImage();
+        vector<vector<Color>> getCarved();
+        vector<vector<Color>> getDrawn();
 
 };
 

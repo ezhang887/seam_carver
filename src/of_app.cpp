@@ -17,8 +17,7 @@ void OfApp::setup(){
     panel.add(enable_face_detection.setup("Enable face detection", true));
     panel.add(popup_carved.setup("popup carved image"));
     panel.add(popup_seams.setup("popup seams on image"));
-    panel.add(target_height.setup("Set target height", image.getHeight()));
-    panel.add(target_width.setup("Set target width", image.getWidth()));
+    panel.add(target_height.setup("Set target height", image.getHeight())); panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(image_height.setup("Image height", ""));
     panel.add(image_width.setup("Image width", ""));
 
@@ -61,7 +60,7 @@ void OfApp::popupCarved(){
     else{
         sc.add_v_seams(-diff_width);
     }
-    ofImage new_image = ImageUtils::raw_to_of(sc.getImage());
+    ofImage new_image = ImageUtils::raw_to_of(sc.getCarved());
 
     runPopupWindow(new_image, main_window);
 }

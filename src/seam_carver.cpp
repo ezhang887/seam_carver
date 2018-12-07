@@ -11,6 +11,8 @@ using std::min;
 using std::max;
 
 SeamCarver::SeamCarver(vector<vector<Color>> image){
+    this->original_image = image;
+    this->drawn_image = image;
     this->image = image;
     this->height = image.size();
     this->width = image[0].size();
@@ -243,5 +245,19 @@ vector<vector<Color>> SeamCarver::getImage(){
     if (transposed){ 
         transpose();
     }
+    return original_image;
+}
+
+vector<vector<Color>> SeamCarver::getCarved(){
+    if (transposed){
+        transpose();
+    }
     return image;
+}
+
+vector<vector<Color>> SeamCarver::getDrawn(){
+    if (transposed){
+        transpose();
+    }
+    return drawn_image;
 }
