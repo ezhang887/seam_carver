@@ -18,6 +18,7 @@ class OfApp : public ofBaseApp{
         ofxLabel image_width;
 
         ofImage image;
+        ofxToggle enable_face_detection;
 
         shared_ptr<ofAppBaseWindow> main_window;
 

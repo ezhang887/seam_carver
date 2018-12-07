@@ -14,10 +14,11 @@ void OfApp::setup(){
     
     panel.setup();
     panel.add(load.setup("load image"));
+    panel.add(enable_face_detection.setup("Enable face detection", true));
     panel.add(popup_carved.setup("popup carved image"));
     panel.add(popup_seams.setup("popup seams on image"));
-    panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(target_height.setup("Set target height", image.getHeight()));
+    panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(image_height.setup("Image height", ""));
     panel.add(image_width.setup("Image width", ""));
 
@@ -34,7 +35,9 @@ void OfApp::loadImage(){
         int bigger = max(image.getHeight(), image.getWidth());
         image.resize(max_w * image.getWidth()/bigger,max_h * image.getHeight()/bigger);
     }
-    face_detector.update(image);
+    if (enable_face_detection){
+        face_detector.update(image);
+    }
     image_height = ofToString(image.getHeight());
     image_width = ofToString(image.getWidth());
 }
@@ -102,12 +105,14 @@ void OfApp::draw(){
     panel.draw();
     if (image.isAllocated()){
         image.draw(500, 10);
-	for(int i = 0; i < face_detector.size(); i++){
-            ofNoFill();
-            ofRectangle object = face_detector.getObject(i);
-            object.setX(500 + object.getX());
-            object.setY(10 + object.getY());
-            ofDrawRectangle(object);
-	}
+        if (enable_face_detection){
+            for(int i = 0; i < face_detector.size(); i++){
+                ofNoFill();
+                ofRectangle object = face_detector.getObject(i);
+                object.setX(500 + object.getX());
+                object.setY(10 + object.getY());
+                ofDrawRectangle(object);
+            }
+        }
     }
 }
