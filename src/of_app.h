@@ -14,6 +14,8 @@ class OfApp : public ofBaseApp{
         ofxButton load;
         ofxInputField<int> target_height;
         ofxInputField<int> target_width;
+        ofxLabel image_height;
+        ofxLabel image_width;
 
         ofImage image;
 

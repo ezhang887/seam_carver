@@ -18,6 +18,8 @@ void OfApp::setup(){
     panel.add(popup_seams.setup("popup seams on image"));
     panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(target_height.setup("Set target height", image.getHeight()));
+    panel.add(image_height.setup("Image height", ""));
+    panel.add(image_width.setup("Image width", ""));
 
     face_detector.setup("haarcascade_frontalface_default.xml");
 }
@@ -33,6 +35,8 @@ void OfApp::loadImage(){
         image.resize(max_w * image.getWidth()/bigger,max_h * image.getHeight()/bigger);
     }
     face_detector.update(image);
+    image_height = ofToString(image.getHeight());
+    image_width = ofToString(image.getWidth());
 }
 
 void OfApp::popupCarved(){
