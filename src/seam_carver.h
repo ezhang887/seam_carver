@@ -30,14 +30,17 @@ class SeamCarver{
         int height;
         //2d array representation of the image
         vector<vector<Color>> image;
-        vector<vector<Color>> original_image;
         vector<vector<Color>> drawn_image;
 
         Color average(Color a, Color b);
         double energy(int row, int col);
         double distance(Color a, Color b);
 
-        //returns a list of indexes of the current minimum energy seams
+        void transpose();
+
+    public:
+        SeamCarver(vector<vector<Color>> image);
+
         vector<int> find_h_seam();
         vector<int> find_v_seam();
 
@@ -46,17 +49,6 @@ class SeamCarver{
         void add_h_seam(vector<int> seam);
         void add_v_seam(vector<int> seam);
 
-        void transpose();
-
-    public:
-        SeamCarver(vector<vector<Color>> image);
-
-        vector<vector<int>> carve_h_seams(int num_seams);
-        vector<vector<int>> carve_v_seams(int num_seams);
-        vector<vector<int>> add_h_seams(int num_seams);
-        vector<vector<int>> add_v_seams(int num_seams);
-
-        vector<vector<Color>> getImage();
         vector<vector<Color>> getCarved();
         vector<vector<Color>> getDrawn();
 

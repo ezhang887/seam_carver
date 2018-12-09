@@ -21,7 +21,7 @@ void OfApp::setup(){
     panel.add(target_height.setup("Set target height", image.getHeight())); panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(image_height.setup("Image height", ""));
     panel.add(image_width.setup("Image width", ""));
-    panel.add(start_calculation.setup("Start seam carver calculation"));
+    panel.add(start_calculation.setup("Calculate!"));
 
     face_detector.setup("haarcascade_frontalface_default.xml");
 }
@@ -66,24 +66,41 @@ void OfApp::startCalculation(){
         return;
     }
     SeamCarver sc(ImageUtils::of_to_raw(image));
+    string path = ofToDataPath("test.gif");
+    gif_saver.create(path);
+
     int diff_height = image.getHeight() - target_height;
     int diff_width = image.getWidth() - target_width;
-    vector<vector<int>> h_seams;
-    vector<vector<int>> v_seams;
     if (diff_height > 0){
-        h_seams = sc.carve_h_seams(diff_height);
+        for(int i=0; i<diff_height; i++){
+            vector<int> seam = sc.find_h_seam();
+            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixelsRef());
+            sc.remove_h_seam(seam);
+        }
     }
     else{
-        h_seams = sc.add_h_seams(-diff_height);
+        for(int i=0; i<(-diff_height); i++){
+            vector<int> seam = sc.find_h_seam();
+            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixelsRef());
+            sc.add_h_seam(seam);
+        }
     }
     if (diff_width > 0){
-        v_seams = sc.carve_v_seams(diff_width);
+        for(int i=0; i<diff_width; i++){
+            vector<int> seam = sc.find_v_seam();
+            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixelsRef());
+            sc.remove_v_seam(seam);
+        }
     }
     else{
-        v_seams = sc.add_v_seams(-diff_width);
+        for(int i=0; i<(-diff_width); i++){
+            vector<int> seam = sc.find_v_seam();
+            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixelsRef());
+            sc.add_v_seam(seam);
+        }
     }
     carved_image = ImageUtils::raw_to_of(sc.getCarved());
-    seams_image = ImageUtils::draw_seams(ImageUtils::of_to_raw(image), h_seams, v_seams);
+    gif_saver.save();
 }
 
 void OfApp::update(){

@@ -11,9 +11,8 @@ using std::min;
 using std::max;
 
 SeamCarver::SeamCarver(vector<vector<Color>> image){
-    this->original_image = image;
-    this->drawn_image = image;
     this->image = image;
+    this->drawn_image = image;
     this->height = image.size();
     this->width = image[0].size();
     this->transposed = false;
@@ -103,6 +102,10 @@ vector<int> SeamCarver::find_h_seam(){
     for(int col=width-1, row = min_row_idx; col>=0; col--, row-=bt[row][col]){
         rv[col] = row;
     }
+    for(int col=0; col<rv.size(); col++){
+        int row = rv[col];
+        drawn_image[row][col] = Color(255,0,0);
+    }
     return rv;
 }
 
@@ -134,6 +137,7 @@ void SeamCarver::remove_h_seam(vector<int> seam){
     }
     //update member variable with new image
     image = new_image;
+    drawn_image = image;
 }
 
 void SeamCarver::remove_v_seam(vector<int> seam){
@@ -162,6 +166,7 @@ void SeamCarver::add_h_seam(vector<int> seam){
         }
     }
     image = new_image;
+    drawn_image = image;
 }
 
 void SeamCarver::add_v_seam(vector<int> seam){
@@ -183,69 +188,17 @@ void SeamCarver::transpose(){
     }
     //update image
     image = new_image;
+    vector<vector<Color>> new_drawn_image(width, vector<Color>(height, Color(0,0,0)));
+    for(int row=0; row<height; row++){
+        for(int col=0; col<width; col++){
+            new_drawn_image[col][row] = drawn_image[row][col];
+        }
+    }
+    drawn_image = new_drawn_image;
     //swap width and height member variables
     int temp = height;
     height = width;
     width = temp;
-}
-
-vector<vector<int>> SeamCarver::carve_h_seams(int num_seams){
-    assert(num_seams > 0);
-    vector<vector<int>> rv;
-    for(int i=0; i<num_seams; i++){
-        vector<int> seam = find_h_seam();
-        rv.push_back(seam);
-        remove_h_seam(seam);
-    }
-    return rv;
-}
-
-vector<vector<int>> SeamCarver::carve_v_seams(int num_seams){
-    assert(num_seams > 0);
-    vector<vector<int>> rv;
-    for(int i=0; i<num_seams; i++){
-        vector<int> seam = find_v_seam();
-        rv.push_back(seam);
-        remove_v_seam(seam);
-    }
-    return rv;
-}
-
-vector<vector<int>> SeamCarver::add_h_seams(int num_seams){
-    assert(num_seams > 0);
-    auto original(image);
-    int original_height = height;
-    int original_width = width;
-    vector<vector<int>> rv = carve_h_seams(num_seams);
-    image = original;
-    height = original_height;
-    width = original_width;
-    for(auto seam : rv){
-        add_h_seam(seam);
-    }
-    return rv;
-}
-
-vector<vector<int>> SeamCarver::add_v_seams(int num_seams){
-    assert(num_seams > 0);
-    auto original(image);
-    int original_height = height;
-    int original_width = width;
-    vector<vector<int>> rv = carve_v_seams(num_seams);
-    image = original;
-    height = original_height;
-    width = original_width;
-    for(auto seam : rv){
-        add_v_seam(seam);
-    }
-    return rv;
-}
-
-vector<vector<Color>> SeamCarver::getImage(){
-    if (transposed){ 
-        transpose();
-    }
-    return original_image;
 }
 
 vector<vector<Color>> SeamCarver::getCarved(){

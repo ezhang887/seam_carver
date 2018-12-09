@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxCv.h"
+#include "ofxGif.h"
 
 class OfApp : public ofBaseApp{
 
@@ -26,6 +27,7 @@ class OfApp : public ofBaseApp{
         shared_ptr<ofAppBaseWindow> main_window;
 
         ofxCv::ObjectFinder face_detector;
+        ofxGIF::fiGifSaver gif_saver;
 
         void loadImage();
         void popupCarved();
