@@ -11,6 +11,7 @@ void OfApp::setup(){
     load.addListener(this, &OfApp::loadImage);
     popup_carved.addListener(this, &OfApp::popupCarved);
     popup_seams.addListener(this, &OfApp::popupSeams);
+    start_calculation.addListener(this, &OfApp::startCalculation);
     
     panel.setup();
     panel.add(load.setup("load image"));
@@ -20,6 +21,7 @@ void OfApp::setup(){
     panel.add(target_height.setup("Set target height", image.getHeight())); panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(image_height.setup("Image height", ""));
     panel.add(image_width.setup("Image width", ""));
+    panel.add(start_calculation.setup("Start seam carver calculation"));
 
     face_detector.setup("haarcascade_frontalface_default.xml");
 }
@@ -39,39 +41,33 @@ void OfApp::loadImage(){
     }
     image_height = ofToString(image.getHeight());
     image_width = ofToString(image.getWidth());
+
+    //reset the processed images to the new image
+    carved_image = image;
+    seams_image = image;
 }
 
 void OfApp::popupCarved(){
     if (!image.isAllocated()){
         return;
     }
-    SeamCarver sc(ImageUtils::of_to_raw(image));
-    int diff_height = image.getHeight()-target_height;
-    int diff_width = image.getWidth()-target_width;
-    if (diff_height > 0){
-        sc.carve_h_seams(diff_height);
-    }
-    else{
-        sc.add_h_seams(-diff_height);
-    }
-    if (diff_width > 0){
-        sc.carve_v_seams(diff_width);
-    }
-    else{
-        sc.add_v_seams(-diff_width);
-    }
-    ofImage new_image = ImageUtils::raw_to_of(sc.getCarved());
-
-    runPopupWindow(new_image, main_window);
+    runPopupWindow(carved_image, main_window);
 }
 
 void OfApp::popupSeams(){
     if (!image.isAllocated()){
         return;
     }
+    runPopupWindow(seams_image, main_window);
+}
+
+void OfApp::startCalculation(){
+    if (!image.isAllocated()){
+        return;
+    }
     SeamCarver sc(ImageUtils::of_to_raw(image));
-    int diff_height = image.getHeight()-target_height;
-    int diff_width = image.getWidth()-target_width;
+    int diff_height = image.getHeight() - target_height;
+    int diff_width = image.getWidth() - target_width;
     vector<vector<int>> h_seams;
     vector<vector<int>> v_seams;
     if (diff_height > 0){
@@ -86,9 +82,8 @@ void OfApp::popupSeams(){
     else{
         v_seams = sc.add_v_seams(-diff_width);
     }
-    ofImage new_image = ImageUtils::draw_seams(ImageUtils::of_to_raw(image), h_seams, v_seams);
-
-    runPopupWindow(new_image, main_window);
+    carved_image = ImageUtils::raw_to_of(sc.getCarved());
+    seams_image = ImageUtils::draw_seams(ImageUtils::of_to_raw(image), h_seams, v_seams);
 }
 
 void OfApp::update(){

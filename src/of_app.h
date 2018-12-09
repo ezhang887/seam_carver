@@ -16,8 +16,11 @@ class OfApp : public ofBaseApp{
         ofxInputField<int> target_width;
         ofxLabel image_height;
         ofxLabel image_width;
+        ofxButton start_calculation;
 
         ofImage image;
+        ofImage carved_image;
+        ofImage seams_image;
         ofxToggle enable_face_detection;
 
         shared_ptr<ofAppBaseWindow> main_window;
@@ -27,6 +30,7 @@ class OfApp : public ofBaseApp{
         void loadImage();
         void popupCarved();
         void popupSeams();
+        void startCalculation();
 
     public:
         OfApp(shared_ptr<ofAppBaseWindow>& main_window);
