@@ -2,6 +2,7 @@
 #include "popup.h"
 #include "seam_carver.h"
 #include "image_utils.h"
+#include <unistd.h>
 
 OfApp::OfApp(shared_ptr<ofAppBaseWindow>& main_window){
     this->main_window = main_window;
@@ -21,7 +22,7 @@ void OfApp::setup(){
     panel.add(target_height.setup("Set target height", image.getHeight())); panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(image_height.setup("Image height", ""));
     panel.add(image_width.setup("Image width", ""));
-    panel.add(start_calculation.setup("Start seam carver calculation"));
+    panel.add(start_calculation.setup("Calculate!"));
 
     face_detector.setup("haarcascade_frontalface_default.xml");
 }
