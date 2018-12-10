@@ -22,8 +22,7 @@ SeamCarver::SeamCarver(vector<vector<Color>> image){
     this->transposed = false;
 }
 
-Color SeamCarver::average(Color a, Color b){
-    int r_avg = (a.r + b.r)/2;
+Color SeamCarver::average(Color a, Color b){ int r_avg = (a.r + b.r)/2;
     int g_avg = (a.g + b.g)/2;
     int b_avg = (a.b + b.b)/2;
     return Color(r_avg, g_avg, b_avg);
