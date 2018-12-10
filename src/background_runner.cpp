@@ -15,6 +15,7 @@ void BackgroundRunner::threadedFunction(){
     if (enable_gif){
         gif_saver.create(gif_path);
     }
+    int total_iters = abs(diff_height*diff_width);
 
     int horizontal_iteration = 0;
     while(ofThread::isThreadRunning() && horizontal_iteration < abs(diff_height)){
@@ -30,7 +31,7 @@ void BackgroundRunner::threadedFunction(){
             sc.add_h_seam(seam);
         }
         horizontal_iteration++;
-        cout << "First loop!" << " " << horizontal_iteration << endl;
+        progress++;
     }
 
     int vertical_iteration = 0;
@@ -47,7 +48,7 @@ void BackgroundRunner::threadedFunction(){
             sc.add_h_seam(seam);
         }
         vertical_iteration++;
-        cout << "Second loop!" << " " << vertical_iteration << endl;
+        progress++;
     }
     this->processed_image = sc.getCarved();
     if (enable_gif){
@@ -57,6 +58,7 @@ void BackgroundRunner::threadedFunction(){
     cout << "DONE!" << endl;
 
     this->is_finished = true;
+
     ofThread::unlock();
 }
 
@@ -69,6 +71,7 @@ void BackgroundRunner::start(ofImage image, string gif_path, int diff_height, in
     this->is_finished = false;
     this->has_started = true;
     this->enable_gif = enable_gif;
+    this->progress = 0;
 
     ofThread::startThread();
 }
@@ -84,4 +87,10 @@ bool BackgroundRunner::finished(){
 
 bool BackgroundRunner::started(){
     return has_started;
+}
+
+int BackgroundRunner::get_progress(){
+    double total = abs(diff_height) + abs(diff_width);
+    double rv = (double)progress/total;
+    return (int)(rv*100);
 }

@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxCv.h"
+#include "ofxProgressBar.h"
 #include "background_runner.h"
 
 class OfApp : public ofBaseApp{
@@ -24,6 +25,8 @@ class OfApp : public ofBaseApp{
         ofxToggle enable_face_detection;
         ofxToggle enable_gif_generation;
 
+        ofxProgressBar progress_bar;
+
         shared_ptr<ofAppBaseWindow> main_window;
 
         ofxCv::ObjectFinder face_detector;
@@ -31,6 +34,7 @@ class OfApp : public ofBaseApp{
         BackgroundRunner background_runner;
 
         bool gif_generated;
+        int progress;
 
         void loadImage();
         void popup_gif();

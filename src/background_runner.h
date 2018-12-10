@@ -10,6 +10,7 @@ class BackgroundRunner : public ofThread{
     private:
         int diff_height;
         int diff_width;
+        int progress;
         bool is_finished;
         bool has_started;
         bool enable_gif;
@@ -30,7 +31,7 @@ class BackgroundRunner : public ofThread{
         void stop();
         bool finished();
         bool started();
-
+        int get_progress();
 };
 
 #endif

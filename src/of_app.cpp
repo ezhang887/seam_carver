@@ -25,6 +25,15 @@ void OfApp::setup(){
     panel.add(image_width.setup("Image width", ""));
     panel.add(start_calculation.setup("Calculate!"));
 
+    progress = 0;
+    progress_bar = ofxProgressBar(15,275,175,20, &progress, 100);
+    ofTrueTypeFont font;
+    font.load("verdana.ttf", 11, true, true);
+    progress_bar.setFont(font);
+    progress_bar.setBarColor(ofColor::white);
+    progress_bar.setBackgroundColor(ofColor::black);
+    progress_bar.setLabel("Seam Carving Progress...");
+
     face_detector.setup("haarcascade_frontalface_default.xml");
 }
 
@@ -68,6 +77,9 @@ void OfApp::startCalculation(){
     if (!image.isAllocated()){
         return;
     }
+    if (background_runner.started() && !background_runner.finished()){
+        return;
+    }
     int diff_height = image.getHeight() - target_height;
     int diff_width = image.getWidth() - target_width;
     string path = ofToDataPath("test.gif");
@@ -76,15 +88,20 @@ void OfApp::startCalculation(){
 }
 
 void OfApp::update(){
+    if (background_runner.started() && !background_runner.finished()){
+        progress = background_runner.get_progress();
+    }
     if (background_runner.started() && background_runner.finished()){
+        progress = 0;
         background_runner.stop();
         carved_image = ImageUtils::raw_to_of(background_runner.getProcessedImage());
     }
 }
 
 void OfApp::draw(){
-    ofBackgroundGradient(ofColor::white, ofColor::gray);
+    ofBackgroundGradient(ofColor::gray, ofColor::lightBlue);
     panel.draw();
+    progress_bar.draw();
     if (image.isAllocated()){
         image.draw(500, 10);
         if (enable_face_detection){
