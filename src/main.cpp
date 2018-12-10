@@ -9,5 +9,6 @@ int main(int argc, char** argv){
 
     shared_ptr<OfApp> mainApp(new OfApp(mainWindow));
     ofRunApp(mainWindow, mainApp);
+    ofSetWindowTitle("Seam Carver");
     ofRunMainLoop();
 }

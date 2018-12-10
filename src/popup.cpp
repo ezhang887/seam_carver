@@ -69,6 +69,7 @@ void runImagePopupWindow(ofImage image, shared_ptr<ofAppBaseWindow>& main_window
 
     shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
     shared_ptr<ImagePopupWindow> popup(new ImagePopupWindow(image));
+    ofSetWindowTitle("Carved Image");
     ofRunApp(window, popup);
 }
 
@@ -80,6 +81,7 @@ void runGifPopupWindow(string path, int height, int width, shared_ptr<ofAppBaseW
 
     shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
     shared_ptr<GifPopupWindow> popup(new GifPopupWindow(path));
+    ofSetWindowTitle("Carving Process");
     ofRunApp(window, popup);
 
 }

@@ -16,7 +16,7 @@ void OfApp::setup(){
     panel.setup();
     panel.add(load.setup("load image"));
     panel.add(enable_face_detection.setup("Enable face detection?", true));
-    panel.add(enable_gif_generation.setup("Enable gif detection?", true));
+    panel.add(enable_gif_generation.setup("Enable gif calculation?", true));
     panel.add(popup_carved.setup("popup carved image"));
     panel.add(show_gif.setup("popup GIF"));
     panel.add(target_height.setup("Set target height", image.getHeight())); 
@@ -99,7 +99,7 @@ void OfApp::update(){
 }
 
 void OfApp::draw(){
-    ofBackgroundGradient(ofColor::gray, ofColor::lightBlue);
+    ofBackgroundGradient(ofColor::aliceBlue, ofColor::lightBlue);
     panel.draw();
     progress_bar.draw();
     if (image.isAllocated()){
