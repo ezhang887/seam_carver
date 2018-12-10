@@ -12,9 +12,13 @@ vector<vector<Color>> BackgroundRunner::getProcessedImage(){
 void BackgroundRunner::threadedFunction(){
     ofThread::lock();
 
+    gif_saver.create(gif_path);
+
     int horizontal_iteration = 0;
     while(ofThread::isThreadRunning() && horizontal_iteration < abs(diff_height)){
         vector<int> seam = sc.find_h_seam();
+        ofPixels drawn_pixels = ImageUtils::raw_to_ofpix(sc.getDrawn());
+        gif_saver.append(drawn_pixels);
         if (diff_height > 0){
             sc.remove_h_seam(seam);
         }
@@ -28,6 +32,8 @@ void BackgroundRunner::threadedFunction(){
     int vertical_iteration = 0;
     while(ofThread::isThreadRunning() && vertical_iteration < abs(diff_width)){
         vector<int> seam = sc.find_v_seam(); 
+        ofPixels drawn_pixels = ImageUtils::raw_to_ofpix(sc.getDrawn());
+        gif_saver.append(drawn_pixels);
         if (diff_width > 0){
             sc.remove_v_seam(seam);
         }
@@ -38,7 +44,8 @@ void BackgroundRunner::threadedFunction(){
         cout << "Second loop!" << " " << vertical_iteration << endl;
     }
     this->processed_image = sc.getCarved();
-    cout << processed_image.size() << endl;
+    gif_saver.save();
+
     cout << "DONE!" << endl;
 
     this->is_finished = true;
@@ -53,7 +60,6 @@ void BackgroundRunner::start(ofImage image, string gif_path, int diff_height, in
     this->diff_width = diff_width;
     this->is_finished = false;
     this->has_started = true;
-    this->gif_frames.clear();
 
     ofThread::startThread();
 }

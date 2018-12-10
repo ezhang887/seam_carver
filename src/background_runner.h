@@ -2,6 +2,7 @@
 #define BACKGROUND_RUNNER_H
 
 #include <ofMain.h>
+#include <ofxGif.h>
 #include "seam_carver.h"
 
 class BackgroundRunner : public ofThread{
@@ -15,8 +16,9 @@ class BackgroundRunner : public ofThread{
         SeamCarver sc;
         ofImage image;
         vector<vector<Color>> processed_image;
-        vector<vector<ofPixels>> gif_frames;
         string gif_path;
+
+        ofxGIF::fiGifSaver gif_saver;
         
         void threadedFunction();
 
