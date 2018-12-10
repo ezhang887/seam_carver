@@ -10,18 +10,19 @@ OfApp::OfApp(shared_ptr<ofAppBaseWindow>& main_window){
 void OfApp::setup(){
     load.addListener(this, &OfApp::loadImage);
     popup_carved.addListener(this, &OfApp::popupCarved);
-    popup_seams.addListener(this, &OfApp::popupSeams);
+    show_gif.addListener(this, &OfApp::popup_gif);
     start_calculation.addListener(this, &OfApp::startCalculation);
     
     panel.setup();
     panel.add(load.setup("load image"));
     panel.add(enable_face_detection.setup("Enable face detection", true));
     panel.add(popup_carved.setup("popup carved image"));
-    panel.add(popup_seams.setup("popup seams on image"));
-    panel.add(target_height.setup("Set target height", image.getHeight())); panel.add(target_width.setup("Set target width", image.getWidth()));
+    panel.add(show_gif.setup("popup GIF"));
+    panel.add(target_height.setup("Set target height", image.getHeight())); 
+    panel.add(target_width.setup("Set target width", image.getWidth()));
     panel.add(image_height.setup("Image height", ""));
     panel.add(image_width.setup("Image width", ""));
-    panel.add(start_calculation.setup("Start seam carver calculation"));
+    panel.add(start_calculation.setup("Calculate!"));
 
     face_detector.setup("haarcascade_frontalface_default.xml");
 }
@@ -51,14 +52,16 @@ void OfApp::popupCarved(){
     if (!image.isAllocated()){
         return;
     }
-    runPopupWindow(carved_image, main_window);
+    runImagePopupWindow(carved_image, main_window);
 }
 
-void OfApp::popupSeams(){
+void OfApp::popup_gif(){
     if (!image.isAllocated()){
         return;
     }
-    runPopupWindow(seams_image, main_window);
+    int h = max(image.getHeight(), carved_image.getHeight());
+    int w = max(image.getWidth(), carved_image.getWidth());
+    runGifPopupWindow("test.gif", h, w, main_window);
 }
 
 void OfApp::startCalculation(){
@@ -66,24 +69,41 @@ void OfApp::startCalculation(){
         return;
     }
     SeamCarver sc(ImageUtils::of_to_raw(image));
+    string path = ofToDataPath("test.gif");
+    gif_saver.create(path);
+
     int diff_height = image.getHeight() - target_height;
     int diff_width = image.getWidth() - target_width;
-    vector<vector<int>> h_seams;
-    vector<vector<int>> v_seams;
     if (diff_height > 0){
-        h_seams = sc.carve_h_seams(diff_height);
+        for(int i=0; i<diff_height; i++){
+            vector<int> seam = sc.find_h_seam();
+            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixels());
+            sc.remove_h_seam(seam);
+        }
     }
     else{
-        h_seams = sc.add_h_seams(-diff_height);
+        for(int i=0; i<(-diff_height); i++){
+            vector<int> seam = sc.find_h_seam();
+            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixels());
+            sc.add_h_seam(seam);
+        }
     }
     if (diff_width > 0){
-        v_seams = sc.carve_v_seams(diff_width);
+        for(int i=0; i<diff_width; i++){
+            vector<int> seam = sc.find_v_seam();
+            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixels());
+            sc.remove_v_seam(seam);
+        }
     }
     else{
-        v_seams = sc.add_v_seams(-diff_width);
+        for(int i=0; i<(-diff_width); i++){
+            vector<int> seam = sc.find_v_seam();
+            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixels());
+            sc.add_v_seam(seam);
+        }
     }
     carved_image = ImageUtils::raw_to_of(sc.getCarved());
-    seams_image = ImageUtils::draw_seams(ImageUtils::of_to_raw(image), h_seams, v_seams);
+    gif_saver.save();
 }
 
 void OfApp::update(){

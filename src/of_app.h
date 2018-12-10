@@ -4,13 +4,14 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxCv.h"
+#include "ofxGif.h"
 
 class OfApp : public ofBaseApp{
 
     private: 
         ofxPanel panel;
         ofxButton popup_carved;
-        ofxButton popup_seams;
+        ofxButton show_gif;
         ofxButton load;
         ofxInputField<int> target_height;
         ofxInputField<int> target_width;
@@ -26,10 +27,11 @@ class OfApp : public ofBaseApp{
         shared_ptr<ofAppBaseWindow> main_window;
 
         ofxCv::ObjectFinder face_detector;
+        ofxGIF::fiGifSaver gif_saver;
 
         void loadImage();
+        void popup_gif();
         void popupCarved();
-        void popupSeams();
         void startCalculation();
 
     public:
