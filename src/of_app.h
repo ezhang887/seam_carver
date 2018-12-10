@@ -4,7 +4,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxCv.h"
-#include "ofxGif.h"
+#include "background_runner.h"
 
 class OfApp : public ofBaseApp{
 
@@ -21,13 +21,13 @@ class OfApp : public ofBaseApp{
 
         ofImage image;
         ofImage carved_image;
-        ofImage seams_image;
         ofxToggle enable_face_detection;
 
         shared_ptr<ofAppBaseWindow> main_window;
 
         ofxCv::ObjectFinder face_detector;
-        ofxGIF::fiGifSaver gif_saver;
+
+        BackgroundRunner background_runner;
 
         void loadImage();
         void popup_gif();
@@ -39,6 +39,7 @@ class OfApp : public ofBaseApp{
         void setup();
         void update();
         void draw();
+        void exit();
 };
 
 #endif

@@ -18,6 +18,20 @@ ofImage ImageUtils::raw_to_of(vector<vector<Color>> image){
     return ofImage(pixels);
 }
 
+ofPixels ImageUtils::raw_to_ofpix(vector<vector<Color>> image){
+    const int height = image.size();
+    const int width = image[0].size();
+    ofPixels pixels;
+    pixels.allocate(width, height, OF_IMAGE_COLOR);
+    for(int i=0; i<height; i++){
+        for(int j=0; j<width; j++){
+            ofColor color(image[i][j].r, image[i][j].g, image[i][j].b);
+            pixels.setColor(j,i,color);
+        }
+    }
+    return pixels;
+}
+
 vector<vector<Color>> ImageUtils::of_to_raw(ofImage image){
     const int height = image.getHeight();
     const int width = image.getWidth();

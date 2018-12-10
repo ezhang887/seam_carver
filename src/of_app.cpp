@@ -1,6 +1,5 @@
 #include "of_app.h"
 #include "popup.h"
-#include "seam_carver.h"
 #include "image_utils.h"
 
 OfApp::OfApp(shared_ptr<ofAppBaseWindow>& main_window){
@@ -30,22 +29,22 @@ void OfApp::setup(){
 void OfApp::loadImage(){
     ofFileDialogResult result = ofSystemLoadDialog("Load file");
     if (result.bSuccess){
+        cout << "HI" << endl;
         string path = result.getPath();
         image.load(path);
         int max_h = 700;
         int max_w = 700;
         int bigger = max(image.getHeight(), image.getWidth());
         image.resize(max_w * image.getWidth()/bigger,max_h * image.getHeight()/bigger);
+        image_height = ofToString(image.getHeight());
+        image_width = ofToString(image.getWidth());
     }
-    if (enable_face_detection){
+    if (result.bSuccess && enable_face_detection){
         face_detector.update(image);
     }
-    image_height = ofToString(image.getHeight());
-    image_width = ofToString(image.getWidth());
 
     //reset the processed images to the new image
     carved_image = image;
-    seams_image = image;
 }
 
 void OfApp::popupCarved(){
@@ -68,46 +67,17 @@ void OfApp::startCalculation(){
     if (!image.isAllocated()){
         return;
     }
-    SeamCarver sc(ImageUtils::of_to_raw(image));
-    string path = ofToDataPath("test.gif");
-    gif_saver.create(path);
-
     int diff_height = image.getHeight() - target_height;
     int diff_width = image.getWidth() - target_width;
-    if (diff_height > 0){
-        for(int i=0; i<diff_height; i++){
-            vector<int> seam = sc.find_h_seam();
-            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixels());
-            sc.remove_h_seam(seam);
-        }
-    }
-    else{
-        for(int i=0; i<(-diff_height); i++){
-            vector<int> seam = sc.find_h_seam();
-            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixels());
-            sc.add_h_seam(seam);
-        }
-    }
-    if (diff_width > 0){
-        for(int i=0; i<diff_width; i++){
-            vector<int> seam = sc.find_v_seam();
-            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixels());
-            sc.remove_v_seam(seam);
-        }
-    }
-    else{
-        for(int i=0; i<(-diff_width); i++){
-            vector<int> seam = sc.find_v_seam();
-            gif_saver.append(ImageUtils::raw_to_of(sc.getDrawn()).getPixels());
-            sc.add_v_seam(seam);
-        }
-    }
-    carved_image = ImageUtils::raw_to_of(sc.getCarved());
-    gif_saver.save();
+    string path = ofToDataPath("test.gif");
+    background_runner.start(image, path, diff_height, diff_width);
 }
 
 void OfApp::update(){
-
+    if (background_runner.started() && background_runner.finished()){
+        background_runner.stop();
+        carved_image = ImageUtils::raw_to_of(background_runner.getProcessedImage());
+    }
 }
 
 void OfApp::draw(){
@@ -125,4 +95,8 @@ void OfApp::draw(){
             }
         }
     }
+}
+
+void OfApp::exit(){
+    background_runner.stop();
 }
