@@ -4,6 +4,7 @@
 
 OfApp::OfApp(shared_ptr<ofAppBaseWindow>& main_window){
     this->main_window = main_window;
+    gif_generated = false;
 }
 
 void OfApp::setup(){
@@ -14,7 +15,8 @@ void OfApp::setup(){
     
     panel.setup();
     panel.add(load.setup("load image"));
-    panel.add(enable_face_detection.setup("Enable face detection", true));
+    panel.add(enable_face_detection.setup("Enable face detection?", true));
+    panel.add(enable_gif_generation.setup("Enable gif detection?", true));
     panel.add(popup_carved.setup("popup carved image"));
     panel.add(show_gif.setup("popup GIF"));
     panel.add(target_height.setup("Set target height", image.getHeight())); 
@@ -29,7 +31,6 @@ void OfApp::setup(){
 void OfApp::loadImage(){
     ofFileDialogResult result = ofSystemLoadDialog("Load file");
     if (result.bSuccess){
-        cout << "HI" << endl;
         string path = result.getPath();
         image.load(path);
         int max_h = 700;
@@ -55,7 +56,7 @@ void OfApp::popupCarved(){
 }
 
 void OfApp::popup_gif(){
-    if (!image.isAllocated()){
+    if (!image.isAllocated() || !gif_generated){
         return;
     }
     int h = max(image.getHeight(), carved_image.getHeight());
@@ -70,7 +71,8 @@ void OfApp::startCalculation(){
     int diff_height = image.getHeight() - target_height;
     int diff_width = image.getWidth() - target_width;
     string path = ofToDataPath("test.gif");
-    background_runner.start(image, path, diff_height, diff_width);
+    gif_generated = enable_gif_generation;
+    background_runner.start(image, path, diff_height, diff_width, enable_gif_generation);
 }
 
 void OfApp::update(){

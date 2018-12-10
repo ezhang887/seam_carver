@@ -12,6 +12,7 @@ class BackgroundRunner : public ofThread{
         int diff_width;
         bool is_finished;
         bool has_started;
+        bool enable_gif;
 
         SeamCarver sc;
         ofImage image;
@@ -25,7 +26,7 @@ class BackgroundRunner : public ofThread{
     public:
         BackgroundRunner();
         vector<vector<Color>> getProcessedImage();
-        void start(ofImage image, string gif_path, int diff_height, int diff_width);
+        void start(ofImage image, string gif_path, int diff_height, int diff_width, bool enable_gif);
         void stop();
         bool finished();
         bool started();

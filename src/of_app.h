@@ -22,12 +22,15 @@ class OfApp : public ofBaseApp{
         ofImage image;
         ofImage carved_image;
         ofxToggle enable_face_detection;
+        ofxToggle enable_gif_generation;
 
         shared_ptr<ofAppBaseWindow> main_window;
 
         ofxCv::ObjectFinder face_detector;
 
         BackgroundRunner background_runner;
+
+        bool gif_generated;
 
         void loadImage();
         void popup_gif();
