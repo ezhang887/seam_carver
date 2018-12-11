@@ -22,7 +22,7 @@ class SeamCarver{
         vector<vector<Color>> drawn_image;
 
         Color average(Color a, Color b);
-        double energy(int row, int col);
+        double energy(int row, int col, FaceBounds& face_bounds);
         double distance(Color a, Color b);
 
         void transpose();
@@ -31,8 +31,8 @@ class SeamCarver{
         SeamCarver();
         SeamCarver(vector<vector<Color>> image);
 
-        vector<int> find_h_seam(FaceBounds face_bounds);
-        vector<int> find_v_seam(FaceBounds face_bounds);
+        vector<int> find_h_seam(FaceBounds& face_bounds);
+        vector<int> find_v_seam(FaceBounds& face_bounds);
 
         void load_image(vector<vector<Color>> image);
 

@@ -34,6 +34,10 @@ struct FaceBounds{
     os << "(" << obj.x << "," << obj.y << "), (" << obj.upper_x << "," << obj.upper_y << ")";
     return os;
     }
+
+    friend bool operator==(const FaceBounds& a, const FaceBounds& b){
+        return a.x == b.x && a.y == b.y && a.upper_x == b.upper_x && a.upper_y == b.upper_y;
+    }
 };
 
 
