@@ -84,7 +84,11 @@ void OfApp::startCalculation(){
     int diff_width = image.getWidth() - target_width;
     string path = ofToDataPath("test.gif");
     gif_generated = enable_gif_generation;
-    background_runner.start(image, path, diff_height, diff_width, enable_gif_generation);
+    FaceBounds face_bounds = constants::kNoFaceBounds;
+    if (enable_face_detection){
+        face_bounds.x = 0;
+    }
+    background_runner.start(image, face_bounds, path, diff_height, diff_width, enable_gif_generation);
 }
 
 void OfApp::update(){

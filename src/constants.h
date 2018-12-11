@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include "seam_carver.h"
+#include "structs.h"
 
 namespace constants{
     const int kMainWindowHeight = 1280;
@@ -26,6 +26,7 @@ namespace constants{
     const double kGifSleepTimeMicros = 0.1 * 1000000;
 
     const FaceBounds kNoFaceBounds = FaceBounds(0,0,0,0);
+    const Color kRed = Color(255,0,0);
 };
 
 #endif

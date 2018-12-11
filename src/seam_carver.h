@@ -2,34 +2,9 @@
 #define SEAM_CARVER_H
 
 #include <vector>
+#include "structs.h"
 
 using std::vector;
-
-struct Color{
-    int r;
-    int g;
-    int b;
-
-    Color(int _r, int _g, int _b){
-        r = _r;
-        g = _g;
-        b = _b;
-    }
-};
-
-struct FaceBounds{
-    int x;
-    int y;
-    int width;
-    int height;
-
-    FaceBounds(int _x, int _y, int _w, int _h){
-        x = _x;
-        y = _y;
-        width = _w;
-        height = _h;
-    }
-};
     
 class SeamCarver{
 

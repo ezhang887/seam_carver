@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include "constants.h"
+
 using std::cout;
 using std::endl;
 using std::min;
@@ -108,7 +110,7 @@ vector<int> SeamCarver::find_h_seam(FaceBounds face_bounds){
     drawn_image = image;
     for(int col=0; col<rv.size(); col++){
         int row = rv[col];
-        drawn_image[row][col] = Color(255,0,0);
+        drawn_image[row][col] = constants::kRed;
     }
     return rv;
 }
