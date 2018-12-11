@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include "constants.h"
+
 using std::cout;
 using std::endl;
 using std::min;
@@ -53,7 +55,7 @@ double SeamCarver::distance(Color a, Color b){
     return sqrt(del_r*del_r + del_g*del_g + del_b*del_b);
 }
 
-vector<int> SeamCarver::find_h_seam(){
+vector<int> SeamCarver::find_h_seam(FaceBounds face_bounds){
     //dp[i][j] = the min. cum. energy on a seam up to (i,j)
     //dp[i][0] = energy
     //dp[i][j+1] = min(dp[i][j+1], dp[i][j]+dp[i+k][j+1]) for k = (-1,0,1)
@@ -108,16 +110,17 @@ vector<int> SeamCarver::find_h_seam(){
     drawn_image = image;
     for(int col=0; col<rv.size(); col++){
         int row = rv[col];
-        drawn_image[row][col] = Color(255,0,0);
+        drawn_image[row][col] = constants::kRed;
     }
     return rv;
 }
 
-vector<int> SeamCarver::find_v_seam(){
+vector<int> SeamCarver::find_v_seam(FaceBounds face_bounds){
     if (!transposed){
         transpose();
     }
-    auto rv = find_h_seam();
+    //TODO: TRANSPOSE FACE_BOUNDS
+    auto rv = find_h_seam(face_bounds);
     transpose();
     return rv;
 }

@@ -1,8 +1,10 @@
 #include "background_runner.h"
 #include "image_utils.h"
+#include "constants.h"
 
 BackgroundRunner::BackgroundRunner(){
     this->has_started = false;
+    this->face_bounds = constants::kNoFaceBounds;
 }
 
 vector<vector<Color>> BackgroundRunner::getProcessedImage(){
@@ -15,11 +17,10 @@ void BackgroundRunner::threadedFunction(){
     if (enable_gif){
         gif_saver.create(gif_path);
     }
-    int total_iters = abs(diff_height*diff_width);
 
     int horizontal_iteration = 0;
     while(ofThread::isThreadRunning() && horizontal_iteration < abs(diff_height)){
-        vector<int> seam = sc.find_h_seam();
+        vector<int> seam = sc.find_h_seam(face_bounds);
         if (enable_gif){
             ofPixels drawn_pixels = ImageUtils::raw_to_ofpix(sc.getDrawn());
             gif_saver.append(drawn_pixels);
@@ -36,7 +37,7 @@ void BackgroundRunner::threadedFunction(){
 
     int vertical_iteration = 0;
     while(ofThread::isThreadRunning() && vertical_iteration < abs(diff_width)){
-        vector<int> seam = sc.find_v_seam(); 
+        vector<int> seam = sc.find_v_seam(face_bounds); 
         if (enable_gif){
             ofPixels drawn_pixels = ImageUtils::raw_to_ofpix(sc.getDrawn());
             gif_saver.append(drawn_pixels);
@@ -62,7 +63,7 @@ void BackgroundRunner::threadedFunction(){
     ofThread::unlock();
 }
 
-void BackgroundRunner::start(ofImage image, string gif_path, int diff_height, int diff_width, bool enable_gif){
+void BackgroundRunner::start(ofImage image, FaceBounds face_bounds, string gif_path, int diff_height, int diff_width, bool enable_gif){
     this->image = image;
     this->gif_path = gif_path;
     this->sc.load_image(ImageUtils::of_to_raw(image));
@@ -71,6 +72,7 @@ void BackgroundRunner::start(ofImage image, string gif_path, int diff_height, in
     this->is_finished = false;
     this->has_started = true;
     this->enable_gif = enable_gif;
+    this->face_bounds = face_bounds;
     this->progress = 0;
 
     ofThread::startThread();

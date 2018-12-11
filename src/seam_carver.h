@@ -2,21 +2,10 @@
 #define SEAM_CARVER_H
 
 #include <vector>
+#include "structs.h"
 
 using std::vector;
-
-struct Color{
-    int r;
-    int g;
-    int b;
-
-    Color(int _r, int _g, int _b){
-        r = _r;
-        g = _g;
-        b = _b;
-    }
-};
-
+    
 class SeamCarver{
 
 #ifdef U_TEST
@@ -42,8 +31,8 @@ class SeamCarver{
         SeamCarver();
         SeamCarver(vector<vector<Color>> image);
 
-        vector<int> find_h_seam();
-        vector<int> find_v_seam();
+        vector<int> find_h_seam(FaceBounds face_bounds);
+        vector<int> find_v_seam(FaceBounds face_bounds);
 
         void load_image(vector<vector<Color>> image);
 
