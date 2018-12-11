@@ -17,6 +17,20 @@ struct Color{
     }
 };
 
+struct FaceBounds{
+    int x;
+    int y;
+    int width;
+    int height;
+
+    FaceBounds(int _x, int _y, int _w, int _h){
+        x = _x;
+        y = _y;
+        width = _w;
+        height = _h;
+    }
+};
+    
 class SeamCarver{
 
 #ifdef U_TEST
@@ -42,8 +56,8 @@ class SeamCarver{
         SeamCarver();
         SeamCarver(vector<vector<Color>> image);
 
-        vector<int> find_h_seam();
-        vector<int> find_v_seam();
+        vector<int> find_h_seam(FaceBounds face_bounds);
+        vector<int> find_v_seam(FaceBounds face_bounds);
 
         void load_image(vector<vector<Color>> image);
 

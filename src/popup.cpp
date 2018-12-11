@@ -1,5 +1,6 @@
-#include "popup.h"
 #include <unistd.h>
+#include "popup.h"
+#include "constants.h"
 
 ImagePopupWindow::ImagePopupWindow(ofImage image){
     this->image = image;
@@ -13,7 +14,7 @@ void ImagePopupWindow::setup(){
 void ImagePopupWindow::draw(){
     save.draw();
     if (image.isAllocated()){
-        image.draw(0,20);
+        image.draw(constants::kPopupImageX, constants::kPopupImageY);
     }
 }
 
@@ -45,7 +46,7 @@ void GifPopupWindow::update(){
         if (index > gif_loader.pages.size()-1){
             index = 0;
         }
-        usleep(0.1 * 1000000);
+        usleep(constants::kGifSleepTimeMicros);
     }
 }
 
@@ -58,13 +59,13 @@ void GifPopupWindow::draw(){
     ofImage image = gif_loader.pages[index];
     ofPixels pixels = image.getPixels();
     image.setFromPixels(pixels);
-    image.draw(0,20);
+    image.draw(constants::kPopupImageX, constants::kPopupImageY);
 }
 
 void runImagePopupWindow(ofImage image, shared_ptr<ofAppBaseWindow>& main_window){
     ofGLFWWindowSettings settings;
     settings.resizable = false;
-    settings.setSize(image.getWidth(), image.getHeight() + 20);
+    settings.setSize(image.getWidth() + constants::kPopupImageX, image.getHeight() + constants::kPopupImageY);
     settings.shareContextWith = main_window;
 
     shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);
@@ -76,7 +77,7 @@ void runImagePopupWindow(ofImage image, shared_ptr<ofAppBaseWindow>& main_window
 void runGifPopupWindow(string path, int height, int width, shared_ptr<ofAppBaseWindow>& main_window){
     ofGLFWWindowSettings settings;
     settings.resizable = false;
-    settings.setSize(width, height + 20);
+    settings.setSize(width + constants::kPopupGifX, height + constants::kPopupGifY);
     settings.shareContextWith = main_window;
 
     shared_ptr<ofAppBaseWindow> window = ofCreateWindow(settings);

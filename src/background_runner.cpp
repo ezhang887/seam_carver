@@ -1,5 +1,6 @@
 #include "background_runner.h"
 #include "image_utils.h"
+#include "constants.h"
 
 BackgroundRunner::BackgroundRunner(){
     this->has_started = false;
@@ -19,7 +20,7 @@ void BackgroundRunner::threadedFunction(){
 
     int horizontal_iteration = 0;
     while(ofThread::isThreadRunning() && horizontal_iteration < abs(diff_height)){
-        vector<int> seam = sc.find_h_seam();
+        vector<int> seam = sc.find_h_seam(constants::kNoFaceBounds);
         if (enable_gif){
             ofPixels drawn_pixels = ImageUtils::raw_to_ofpix(sc.getDrawn());
             gif_saver.append(drawn_pixels);
@@ -36,7 +37,7 @@ void BackgroundRunner::threadedFunction(){
 
     int vertical_iteration = 0;
     while(ofThread::isThreadRunning() && vertical_iteration < abs(diff_width)){
-        vector<int> seam = sc.find_v_seam(); 
+        vector<int> seam = sc.find_v_seam(constants::kNoFaceBounds); 
         if (enable_gif){
             ofPixels drawn_pixels = ImageUtils::raw_to_ofpix(sc.getDrawn());
             gif_saver.append(drawn_pixels);

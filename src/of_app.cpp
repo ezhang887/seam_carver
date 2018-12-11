@@ -1,6 +1,7 @@
 #include "of_app.h"
 #include "popup.h"
 #include "image_utils.h"
+#include "constants.h"
 
 OfApp::OfApp(shared_ptr<ofAppBaseWindow>& main_window){
     this->main_window = main_window;
@@ -26,9 +27,9 @@ void OfApp::setup(){
     panel.add(start_calculation.setup("Calculate!"));
 
     progress = 0;
-    progress_bar = ofxProgressBar(15,275,175,20, &progress, 100);
+    progress_bar = ofxProgressBar(constants::kProgressBarX, constants::kProgressBarY, constants::kProgressBarWidth, constants::kProgressBarHeight, &progress, 100);
     ofTrueTypeFont font;
-    font.load("verdana.ttf", 11, true, true);
+    font.load("verdana.ttf", constants::kProgressBarFontSize, true, true);
     progress_bar.setFont(font);
     progress_bar.setBarColor(ofColor::white);
     progress_bar.setBackgroundColor(ofColor::black);
@@ -42,10 +43,9 @@ void OfApp::loadImage(){
     if (result.bSuccess){
         string path = result.getPath();
         image.load(path);
-        int max_h = 700;
-        int max_w = 700;
+        const int max_size = constants::kMaxLoadedImageDimension;
         int bigger = max(image.getHeight(), image.getWidth());
-        image.resize(max_w * image.getWidth()/bigger,max_h * image.getHeight()/bigger);
+        image.resize(max_size*image.getWidth()/bigger, max_size*image.getHeight()/bigger);
         image_height = ofToString(image.getHeight());
         image_width = ofToString(image.getWidth());
     }
@@ -103,13 +103,13 @@ void OfApp::draw(){
     panel.draw();
     progress_bar.draw();
     if (image.isAllocated()){
-        image.draw(500, 10);
+        image.draw(constants::kLoadedImageX, constants::kLoadedImageY);
         if (enable_face_detection){
             for(int i = 0; i < face_detector.size(); i++){
                 ofNoFill();
                 ofRectangle object = face_detector.getObject(i);
-                object.setX(500 + object.getX());
-                object.setY(10 + object.getY());
+                object.setX(constants::kLoadedImageX + object.getX());
+                object.setY(constants::kLoadedImageY + object.getY());
                 ofDrawRectangle(object);
             }
         }
