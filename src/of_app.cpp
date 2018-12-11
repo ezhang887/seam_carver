@@ -86,7 +86,12 @@ void OfApp::startCalculation(){
     gif_generated = enable_gif_generation;
     FaceBounds face_bounds = constants::kNoFaceBounds;
     if (enable_face_detection){
-        face_bounds.x = 0;
+        ofRectangle face = face_detector.getObject(0);
+        face_bounds.x = face.getMinX();
+        face_bounds.y = face.getMinY();
+        face_bounds.upper_x = face.getMaxX();
+        face_bounds.upper_y = face.getMaxY();
+        cout << face_bounds << endl;
     }
     background_runner.start(image, face_bounds, path, diff_height, diff_width, enable_gif_generation);
 }
@@ -109,13 +114,11 @@ void OfApp::draw(){
     if (image.isAllocated()){
         image.draw(constants::kLoadedImageX, constants::kLoadedImageY);
         if (enable_face_detection){
-            for(int i = 0; i < face_detector.size(); i++){
-                ofNoFill();
-                ofRectangle object = face_detector.getObject(i);
-                object.setX(constants::kLoadedImageX + object.getX());
-                object.setY(constants::kLoadedImageY + object.getY());
-                ofDrawRectangle(object);
-            }
+            ofNoFill();
+            ofRectangle object = face_detector.getObject(0);
+            object.setX(constants::kLoadedImageX + object.getX());
+            object.setY(constants::kLoadedImageY + object.getY());
+            ofDrawRectangle(object);
         }
     }
 }

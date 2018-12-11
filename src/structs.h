@@ -1,6 +1,10 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
+#include <iostream>
+
+using std::ostream;
+
 struct Color{
     int r;
     int g;
@@ -25,6 +29,13 @@ struct FaceBounds{
         upper_x = _upper_x;
         upper_y = _upper_y;
     }
+
+    friend ostream& operator<<(ostream& os, const FaceBounds& obj){
+    os << "(" << obj.x << "," << obj.y << "), (" << obj.upper_x << "," << obj.upper_y << ")";
+    return os;
+    }
 };
+
+
 
 #endif
