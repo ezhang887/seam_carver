@@ -30,7 +30,10 @@ Color SeamCarver::average(Color a, Color b){ int r_avg = (a.r + b.r)/2;
     return Color(r_avg, g_avg, b_avg);
 }
 
-double SeamCarver::energy(int row, int col){
+double SeamCarver::energy(int row, int col, FaceBounds& face_bounds){
+    if (row >= face_bounds.y && row <= face_bounds.upper_y && col >= face_bounds.x && col <= face_bounds.upper_x){
+        return 1e9;
+    }
     Color curr = image[row][col];
     double rv = 0;
     if (row > 0){
@@ -55,7 +58,7 @@ double SeamCarver::distance(Color a, Color b){
     return sqrt(del_r*del_r + del_g*del_g + del_b*del_b);
 }
 
-vector<int> SeamCarver::find_h_seam(FaceBounds face_bounds){
+vector<int> SeamCarver::find_h_seam(FaceBounds& face_bounds){
     //dp[i][j] = the min. cum. energy on a seam up to (i,j)
     //dp[i][0] = energy
     //dp[i][j+1] = min(dp[i][j+1], dp[i][j]+dp[i+k][j+1]) for k = (-1,0,1)
@@ -64,7 +67,7 @@ vector<int> SeamCarver::find_h_seam(FaceBounds face_bounds){
     vector<vector<int>> bt(height, vector<int>(width, 0));
     //base case: 1st col is the default energy
     for(int row=0; row<height; row++){
-        dp[row][0] = energy(row, 0);
+        dp[row][0] = energy(row, 0, face_bounds);
     }
 
     //update dp table
@@ -80,8 +83,8 @@ vector<int> SeamCarver::find_h_seam(FaceBounds face_bounds){
                 if (next_row < 0 || next_row >= height){
                     continue;
                 }
-                if (dp[row][col] + energy(next_row,next_col) < dp[next_row][next_col]){
-                    dp[next_row][next_col] = dp[row][col] + energy(next_row,next_col);
+                if (dp[row][col] + energy(next_row, next_col, face_bounds) < dp[next_row][next_col]){
+                    dp[next_row][next_col] = dp[row][col] + energy(next_row, next_col, face_bounds);
                     bt[next_row][next_col] = d_row;
                 }
             }
@@ -102,10 +105,22 @@ vector<int> SeamCarver::find_h_seam(FaceBounds face_bounds){
 
     //backtrack the path
     vector<int> rv(width);
+    bool above_face_bound = true;
     //we subtract the delta that brought us to this row after each iteration
     //and decrement the column index by one
     for(int col=width-1, row = min_row_idx; col>=0; col--, row-=bt[row][col]){
+        if (col >= face_bounds.x && col <= face_bounds.upper_x){
+            if (row > face_bounds.y){
+                above_face_bound = false;
+            }
+        }
         rv[col] = row;
+    }
+    if (above_face_bound){
+        if (face_bounds.y > 0){
+            face_bounds.y--;
+            face_bounds.upper_y--;
+        }
     }
     drawn_image = image;
     for(int col=0; col<rv.size(); col++){
@@ -115,12 +130,17 @@ vector<int> SeamCarver::find_h_seam(FaceBounds face_bounds){
     return rv;
 }
 
-vector<int> SeamCarver::find_v_seam(FaceBounds face_bounds){
+vector<int> SeamCarver::find_v_seam(FaceBounds& face_bounds){
     if (!transposed){
         transpose();
     }
     //TODO: TRANSPOSE FACE_BOUNDS
-    auto rv = find_h_seam(face_bounds);
+    FaceBounds transposed_bounds;
+    transposed_bounds.x = face_bounds.y;
+    transposed_bounds.y = face_bounds.x;
+    transposed_bounds.upper_x = face_bounds.upper_y;
+    transposed_bounds.upper_y = face_bounds.upper_x;
+    auto rv = find_h_seam(transposed_bounds);
     transpose();
     return rv;
 }
