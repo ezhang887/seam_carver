@@ -6,4 +6,4 @@ During week 2, most of my work was developing the algorithm. I created a class f
 ## Week 3
 During week 3, my main goal is to integrated the GUI + the algorithm together, and get a functional seam carving application. I also added a feature to the algorithm to add seams instead of only removing seams. I also added face detection, but did not fully integrate it with the algorithm. I also updated the GUI a bit, added some more labels to display the image width and height, and also cleaned up some of the algorithm code. I still need to fix a few bugs with displaying the seams.
 ## Week 4
-During week 4, my main goal is to add special features such as face detection, object removal, and clean/optimize up the GUI/algorithm.
+During week 4, my main goal is to add special features such as face detection, object removal, and clean/optimize up the GUI/algorithm. I was only able to finish face detection, but I was also able to make the application multi-threaded (so the processing can run in the background). In addition, I was able to generate GIFs of the entire seam carving process for an image.
