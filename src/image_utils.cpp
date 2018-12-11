@@ -38,32 +38,3 @@ vector<vector<Color>> ImageUtils::of_to_raw(ofImage image){
     }
     return rv;
 }
-
-ofImage ImageUtils::draw_seams(vector<vector<Color>> image, vector<vector<int>> h_seams, vector<vector<int>> v_seams){
-    int height = image.size();
-    int width = image[0].size();
-    for(auto seam : h_seams){
-        assert(seam.size() == width);
-    }
-    for(auto seam : v_seams){
-        assert(seam.size() == height);
-    }
-    for(int i=0; i<h_seams.size(); i++){
-        auto seam = h_seams[i];
-        for(int col=0; col<seam.size(); col++){
-            int row = seam[col];
-            image[min(row+i,height-1)][col] = Color(255, 0, 0);
-        }
-    }
-    for(int i=0; i<v_seams.size(); i++){
-        auto seam = v_seams[i];
-        for(int row=0; row<seam.size(); row++){
-            if (row >= height){
-                continue;
-            }
-            int col = seam[row];
-            image[row][min(col+i,width-1)] = Color(0, 0, 255);
-        }
-    }
-    return raw_to_of(image);
-}
