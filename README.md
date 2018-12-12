@@ -15,7 +15,10 @@ See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887
 
 ### Steps to run:
   1. [Install openFrameworks](https://openframeworks.cc/download/)
-  2. [Install dependencies]()
+  2. [Install dependencies](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/README.md#dependencies)
+  3. Make sure the configurations in [config.make](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/config.make) are set properly (specifically make sure [OF_ROOT](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/config.make#L11) actually points to the root directory of your openframeworks installation.
+  4. Build the application by running: ```make``` in the project root directory.
+  5. Run the application by running: ```make RunRelease``` in the project root directory. The main application window should now open.
 
 #### Contributors:
   - Eric Zhang
