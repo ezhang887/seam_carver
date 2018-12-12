@@ -1,14 +1,15 @@
 # Seam Carver
-Seam Carver is an [openFrameworks](https://openframeworks.cc/) desktop application that performs various seam carving applications. 
+Seam Carver is an [openFrameworks](https://openframeworks.cc/) desktop application that performs various seam carving operations. 
+
 It currently supports removing seams, adding seams, generating a GIF of the carving process, and face detection.
 
-See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/PROPOSAL.md) and [documentation](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/DEVELOPMENT.md) for more details.
+See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/PROPOSAL.md) and [documentation](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/DEVELOPMENT.md) for more details on how the algorithm works.
 
 ### Dependencies:
-  The only dependencies are openFramework addons. See [addons.make](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/addons.make) and [this link](https://openframeworks.cc/learning/01_basics/how_to_add_addon_to_project/) for more details.
-  - [ofxGui](https://openframeworks.cc/documentation/ofxGui/) was used to create most of the graphical components in the windows. This should come with your installation of openFrameworks. All the other dependencies need to be manually downloaded.
+  The only dependencies are openFrameworks addons. See [addons.make](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/addons.make) and [this link](https://openframeworks.cc/learning/01_basics/how_to_add_addon_to_project/) for more details.
+  - [ofxGui](https://openframeworks.cc/documentation/ofxGui/) was used to create most of the graphical components in the windows. This should come with your installation of openFrameworks. **All the other dependencies need to be manually downloaded.**
   - [ofxCv](https://github.com/kylemcdonald/ofxCv) was used to enable face detection.
-      - Note: I had an issue initially with building ofxCV, and applied [this](https://github.com/openframeworks/openFrameworks/issues/6012) fix.
+      - Note: I had an issue initially with building ofxCV, and applied [this](https://github.com/openframeworks/openFrameworks/issues/6012) to fix the build issues.
       - Note: [ofxOpenCv](https://openframeworks.cc/documentation/ofxOpenCv/) was not actually used in any way, but for whatever reason, I needed to add it to my [addons.make](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/addons.make) for ofxCv to compile properly.
   - [ofxGif](https://github.com/Geistyp/ofxGif) was used to create, save, and load gifs.
   - [ofxProgressBar](https://github.com/atduskgreg/ofxProgressBar) was used to create the loading bar in the main winow.
@@ -41,13 +42,10 @@ See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887
       ![Gif](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/thanos_carve.gif)
     </p>
     
-  Here is a comparison of an image carved with (right) and without (left) facial recognition, with the original image (top) shown. When facial recognition is enabled, the seam carving algorithm will not choose any seams that intersect with the detected face. Although the carved image with facial recognition is not perfect, it looks much better than the one without facial recognition.
+  Here is a comparison of an image carved with **(right)** and without **(left)** face detection, with the original image **(top)** shown. When face detection is enabled, the seam carving algorithm will not choose any seams that intersect with the detected face. Although the carved image with face detection is not perfect, it looks much better than the one without face detection.
     
   <p align="center">
     <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck.jpg" width="700" height="467"/>
     <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck_no_face_detection.jpg" width="400" height="350"/>
     <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck_with_face_detection.jpg" width="400" height="350"/>
   </p>
-
-#### Contributors:
-  - Eric Zhang
