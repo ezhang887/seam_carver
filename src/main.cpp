@@ -5,7 +5,7 @@
 int main(int argc, char** argv){
     ofGLFWWindowSettings settings;
     settings.resizable = false;
-    settings.setSize(constants::kMainWindowHeight, constants::kMainWindowWidth);
+    settings.setSize(constants::kMainWindowWidth, constants::kMainWindowHeight);
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
 
     shared_ptr<OfApp> mainApp(new OfApp(mainWindow));

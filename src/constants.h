@@ -4,8 +4,8 @@
 #include "structs.h"
 
 namespace constants{
-    const int kMainWindowHeight = 1280;
-    const int kMainWindowWidth = 720;
+    const int kMainWindowWidth = 1280;
+    const int kMainWindowHeight = 720;
 
     const int kPanelWidth = 400;
     const int kPanelHeight = 10;
