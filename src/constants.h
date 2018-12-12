@@ -30,7 +30,7 @@ namespace constants{
 
     const int kFaceDetectionOffsetHeight = 5;
 
-    const FaceBounds kNoFaceBounds = FaceBounds(0,0,0,0);
+    const FaceBounds kNoFaceBounds = FaceBounds(-1,-1,-1,-1);
     const Color kRed = Color(255,0,0);
 };
 

@@ -12,6 +12,7 @@ endif
 # call the project makefile!
 include $(OF_ROOT)/libs/openFrameworksCompiled/project/makefileCommon/compile.project.mk
 
+# manually added stuff for unit testing
 CC = g++
 CFLAGS = -g -std=c++17 -DU_TEST
 TEST = unittest
@@ -19,8 +20,8 @@ TEST = unittest
 run_test: $(TEST)
 	./$(TEST)
 
-$(TEST): src/seam_carver.cpp test/test.cpp
-	$(CC) $(CFLAGS) -o $(TEST) src/seam_carver.cpp test/test.cpp
+$(TEST): src/seam_carver.cpp src/structs.h test/test.cpp test/seam_carver_test.cpp test/structs_test.cpp
+	$(CC) $(CFLAGS) -o $(TEST) src/seam_carver.cpp src/structs.h test/test.cpp
 
 clean_test:
 	rm -f $(TEST)
