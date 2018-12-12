@@ -13,18 +13,20 @@ void OfApp::setup(){
     popup_carved.addListener(this, &OfApp::popupCarved);
     show_gif.addListener(this, &OfApp::popup_gif);
     start_calculation.addListener(this, &OfApp::startCalculation);
-    
+
     panel.setup();
-    panel.add(load.setup("load image"));
-    panel.add(enable_face_detection.setup("Enable face detection?", true));
-    panel.add(enable_gif_generation.setup("Enable gif calculation?", true));
-    panel.add(popup_carved.setup("popup carved image"));
-    panel.add(show_gif.setup("popup GIF"));
-    panel.add(target_height.setup("Set target height", image.getHeight())); 
-    panel.add(target_width.setup("Set target width", image.getWidth()));
-    panel.add(image_height.setup("Image height", ""));
-    panel.add(image_width.setup("Image width", ""));
+    panel.add(load.setup("Load Image"));
+    panel.add(enable_face_detection.setup("Enable Face Detection?", true));
+    panel.add(enable_gif_generation.setup("Enable Gif Calculation?", true));
+    panel.add(popup_carved.setup("Display Processed Image (Popup)"));
+    panel.add(show_gif.setup("Display GIF of Processing (Popup)"));
+    panel.add(target_height.setup("Set Target Height", image.getHeight())); 
+    panel.add(target_width.setup("Set Target Width", image.getWidth()));
+    panel.add(image_height.setup("Image Height", ""));
+    panel.add(image_width.setup("Image Width", ""));
     panel.add(start_calculation.setup("Calculate!"));
+    panel.setSize(constants::kPanelWidth, constants::kPanelHeight);
+    panel.setWidthElements(constants::kPanelWidth);
 
     progress = 0;
     progress_bar = ofxProgressBar(constants::kProgressBarX, constants::kProgressBarY, constants::kProgressBarWidth, constants::kProgressBarHeight, &progress, 100);
@@ -49,7 +51,7 @@ void OfApp::loadImage(){
         image_height = ofToString(image.getHeight());
         image_width = ofToString(image.getWidth());
     }
-    if (result.bSuccess && enable_face_detection){
+    if (result.bSuccess){
         face_detector.update(image);
     }
 
@@ -80,6 +82,10 @@ void OfApp::startCalculation(){
     if (background_runner.started() && !background_runner.finished()){
         return;
     }
+    if (target_height <= 0 || target_width <= 0){
+        cout << "INVALID INPUT" << endl;
+        return;
+    }
     int diff_height = image.getHeight() - target_height;
     int diff_width = image.getWidth() - target_width;
     string path = ofToDataPath("test.gif");
@@ -103,7 +109,7 @@ void OfApp::update(){
     if (background_runner.started() && background_runner.finished()){
         progress = 0;
         background_runner.stop();
-        carved_image = ImageUtils::raw_to_of(background_runner.getProcessedImage());
+        carved_image = image_utils::raw_to_of(background_runner.getProcessedImage());
     }
 }
 

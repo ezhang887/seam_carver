@@ -4,11 +4,11 @@
 
 using std::min;
 
-ofImage ImageUtils::raw_to_of(vector<vector<Color>> image){
+ofImage image_utils::raw_to_of(vector<vector<Color>> image){
     return ofImage(raw_to_ofpix(image));
 }
 
-ofPixels ImageUtils::raw_to_ofpix(vector<vector<Color>> image){
+ofPixels image_utils::raw_to_ofpix(vector<vector<Color>> image){
     const int height = image.size();
     const int width = image[0].size();
     ofPixels pixels;
@@ -22,7 +22,7 @@ ofPixels ImageUtils::raw_to_ofpix(vector<vector<Color>> image){
     return pixels;
 }
 
-vector<vector<Color>> ImageUtils::of_to_raw(ofImage image){
+vector<vector<Color>> image_utils::of_to_raw(ofImage image){
     const int height = image.getHeight();
     const int width = image.getWidth();
     vector<vector<Color>> rv;

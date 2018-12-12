@@ -22,7 +22,7 @@ void BackgroundRunner::threadedFunction(){
     while(ofThread::isThreadRunning() && horizontal_iteration < abs(diff_height)){
         vector<int> seam = sc.find_h_seam(face_bounds);
         if (enable_gif){
-            ofPixels drawn_pixels = ImageUtils::raw_to_ofpix(sc.getDrawn());
+            ofPixels drawn_pixels = image_utils::raw_to_ofpix(sc.getDrawn());
             gif_saver.append(drawn_pixels);
         }
         if (diff_height > 0){
@@ -39,7 +39,7 @@ void BackgroundRunner::threadedFunction(){
     while(ofThread::isThreadRunning() && vertical_iteration < abs(diff_width)){
         vector<int> seam = sc.find_v_seam(face_bounds); 
         if (enable_gif){
-            ofPixels drawn_pixels = ImageUtils::raw_to_ofpix(sc.getDrawn());
+            ofPixels drawn_pixels = image_utils::raw_to_ofpix(sc.getDrawn());
             gif_saver.append(drawn_pixels);
         }
         if (diff_width > 0){
@@ -66,7 +66,7 @@ void BackgroundRunner::threadedFunction(){
 void BackgroundRunner::start(ofImage image, FaceBounds face_bounds, string gif_path, int diff_height, int diff_width, bool enable_gif){
     this->image = image;
     this->gif_path = gif_path;
-    this->sc.load_image(ImageUtils::of_to_raw(image));
+    this->sc.load_image(image_utils::of_to_raw(image));
     this->diff_height = diff_height;
     this->diff_width = diff_width;
     this->is_finished = false;

@@ -31,7 +31,7 @@ Color SeamCarver::average(Color a, Color b){ int r_avg = (a.r + b.r)/2;
 }
 
 double SeamCarver::energy(int row, int col, FaceBounds& face_bounds){
-    if (row >= face_bounds.y && row <= face_bounds.upper_y && col >= face_bounds.x && col <= face_bounds.upper_x){
+    if (row >= face_bounds.y-constants::kFaceDetectionOffsetHeight && row <= face_bounds.upper_y+constants::kFaceDetectionOffsetHeight && col >= face_bounds.x && col <= face_bounds.upper_x){
         return 1e9;
     }
     Color curr = image[row][col];

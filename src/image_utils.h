@@ -6,14 +6,14 @@
 #include "ofMain.h"
 #include "seam_carver.h"
 
-class ImageUtils{
+namespace image_utils{
 
-    public:
-        //raw image to ofImage
-        static ofImage raw_to_of(vector<vector<Color>> image);
-        static ofPixels raw_to_ofpix(vector<vector<Color>> image);
-        //ofImage to raw image
-        static vector<vector<Color>> of_to_raw(ofImage image);
+    //raw image to ofImage
+    ofImage raw_to_of(vector<vector<Color>> image);
+    //raw image to ofPixels
+    ofPixels raw_to_ofpix(vector<vector<Color>> image);
+    //ofImage to raw image
+    vector<vector<Color>> of_to_raw(ofImage image);
 };
 
 #endif

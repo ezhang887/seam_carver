@@ -7,6 +7,9 @@ namespace constants{
     const int kMainWindowHeight = 1280;
     const int kMainWindowWidth = 720;
 
+    const int kPanelWidth = 400;
+    const int kPanelHeight = 10;
+
     const int kLoadedImageX = 500;
     const int kLoadedImageY = 10;
     const int kMaxLoadedImageDimension = 700;
@@ -17,13 +20,15 @@ namespace constants{
     const int kPopupGifX = 0;
     const int kPopupGifY = 20;
 
-    const int kProgressBarX = 15;
+    const int kProgressBarX = 10;
     const int kProgressBarY = 275;
-    const int kProgressBarWidth = 175;
+    const int kProgressBarWidth = 400;
     const int kProgressBarHeight = 20;
     const int kProgressBarFontSize = 11;
 
     const double kGifSleepTimeMicros = 0.1 * 1000000;
+
+    const int kFaceDetectionOffsetHeight = 5;
 
     const FaceBounds kNoFaceBounds = FaceBounds(0,0,0,0);
     const Color kRed = Color(255,0,0);
