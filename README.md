@@ -15,11 +15,22 @@ See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887
 
 ### Steps to run:
   1. [Install openFrameworks](https://openframeworks.cc/download/).
-  2. [Install dependencies](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/README.md#dependencies).
+  2. Install [dependencies](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/README.md#dependencies).
       - Clone the Github repositories of the non-official addons (ofxCv, ofxGif, ofxProgressBar) to your ```OF_ROOT/addons``` directory. Make sure they are also all added in [addons.make](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/addons.make).
   3. Make sure the configurations in [config.make](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/config.make) are set properly (specifically make sure [OF_ROOT](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/config.make#L11) actually points to the root directory of your openframeworks installation.
   4. Build the application by running ```make``` in the project root directory. You should now see output from the project building.
   5. Run the application by running ```make RunRelease``` in the project root directory. The main application window should now open.
+  
+### Screenshots:
+  Here are some screenshots of the main window.
+  
+  <img src="screenshots/main_application.jpg" width="425" height="250"/><img src="screenshots/main_calculation.jpg" width="425" height="250"/>
+  
+  Here is a side-by-side comparison of the original image to the carved image.
+  
+  Here is a gif showing the seam carving process of the above image.
+  
+  Here is a side-by-side comparison of an image carved with and without facial recognition.
 
 #### Contributors:
   - Eric Zhang
