@@ -41,7 +41,7 @@ See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887
       ![Gif](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/thanos_carve.gif)
     </p>
     
-  Here is a comparison of an image carved with (right) and without (left) facial recognition, with the original image (top) shown. When facial recognition is enabled, the seam carving algorithm will not choose any seams that intersect with the detected face. Although the carved image with facial recognition is not perfect, it looks much better than the one without facial recognition.
+  Here is a comparison of an image carved with (right) and without (left) face detection, with the original image (top) shown. When face detection is enabled, the seam carving algorithm will not choose any seams that intersect with the detected face. Although the carved image with face detection is not perfect, it looks much better than the one without face detection.
     
   <p align="center">
     <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck.jpg" width="700" height="467"/>
