@@ -29,11 +29,25 @@ See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887
     <img src="screenshots/main_calculation.jpg" width="800" height="470"/>
   </p>
   
-  Here is a side-by-side comparison of the original image to the carved image.
+  Here is a comparison of the original image to the carved image. The original was ```700x394```, and the carved is ```550x400```.
   
+  <p align="center">
+    <img src="screenshots/uncarved_thanos.jpg" width="700" height="394"/>
+    <img src="screenshots/carved_thanos.jpg" width="550" height="400"/>
+  </p>
+      
   Here is a gif showing the seam carving process of the above image.
-  
-  Here is a side-by-side comparison of an image carved with and without facial recognition.
+    <p align="center">
+      ![Gif](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/thanos_carve.gif)
+    </p>
+    
+  Here is a comparison of an image carved with (right) and without (left) facial recognition, with the original image (top) shown. When facial recognition is enabled, the seam carving algorithm will not choose any seams that intersect with the detected face. Although the carved image with facial recognition is not perfect, it looks much better than the one without facial recognition.
+    
+  <p align="center">
+    <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck.jpg" width="700" height="467"/>
+    <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck_no_face_detection.jpg" width="400" height="350"/>
+    <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck_with_face_detection.jpg" width="400" height="350"/>
+  </p>
 
 #### Contributors:
   - Eric Zhang
