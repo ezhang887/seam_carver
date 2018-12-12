@@ -1,5 +1,5 @@
 # Seam Carver
-Seam Carver is an [openFrameworks](https://openframeworks.cc/) desktop application that performs various seam carving applications. 
+Seam Carver is an [openFrameworks](https://openframeworks.cc/) desktop application that performs various seam carving operations. 
 It currently supports removing seams, adding seams, generating a GIF of the carving process, and face detection.
 
 See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/PROPOSAL.md) and [documentation](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/DEVELOPMENT.md) for more details.
