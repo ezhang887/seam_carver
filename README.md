@@ -24,7 +24,10 @@ See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887
 ### Screenshots:
   Here are some screenshots of the main window.
   
-  <img src="screenshots/main_application.jpg" width="425" height="250"/><img src="screenshots/main_calculation.jpg" width="425" height="250"/>
+  <p align="center">
+    <img src="screenshots/main_application.jpg" width="800" height="470"/>
+    <img src="screenshots/main_calculation.jpg" width="800" height="470"/>
+  </p>
   
   Here is a side-by-side comparison of the original image to the carved image.
   
