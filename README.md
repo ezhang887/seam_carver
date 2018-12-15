@@ -41,7 +41,7 @@ Note: This project was created and only has been tested on Ubuntu 16.04
       
   Here is a gif showing the seam carving process of the above image.
     <p align="center">
-      ![Gif](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/thanos_carve.gif)
+      ![Gif](screenshots/thanos_carve.gif)
     </p>
     
   Here is a comparison of an image carved with **(right)** and without **(left)** face detection, with the original image **(top)** shown. When face detection is enabled, the seam carving algorithm will not choose any seams that intersect with the detected face. Although the carved image with face detection is not perfect, it looks much better than the one without face detection.
