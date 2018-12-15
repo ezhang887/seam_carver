@@ -5,6 +5,8 @@ It currently supports removing seams, adding seams, generating a GIF of the carv
 
 See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/PROPOSAL.md) and [documentation](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/DEVELOPMENT.md) for more details on how the algorithm works.
 
+Note: This project was created and only has been tested on Ubuntu 16.04
+
 ### Dependencies:
   The only dependencies are openFrameworks addons. See [addons.make](https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/addons.make) and [this link](https://openframeworks.cc/learning/01_basics/how_to_add_addon_to_project/) for more details.
   - [ofxGui](https://openframeworks.cc/documentation/ofxGui/) was used to create most of the graphical components in the windows. This should come with your installation of openFrameworks. **All the other dependencies need to be manually downloaded.**
@@ -45,7 +47,7 @@ See the project [proposal](https://github.com/uiuc-fa18-cs126/finalproject-Bo887
   Here is a comparison of an image carved with **(right)** and without **(left)** face detection, with the original image **(top)** shown. When face detection is enabled, the seam carving algorithm will not choose any seams that intersect with the detected face. Although the carved image with face detection is not perfect, it looks much better than the one without face detection.
     
   <p align="center">
-    <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck.jpg" width="700" height="467"/>
-    <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck_no_face_detection.jpg" width="400" height="350"/>
-    <img src="https://github.com/uiuc-fa18-cs126/finalproject-Bo887/blob/master/screenshots/zuck_with_face_detection.jpg" width="400" height="350"/>
+    <img src="screenshots/zuck.jpg" width="700" height="467"/>
+    <img src="screenshots/zuck_no_face_detection.jpg" width="400" height="350"/>
+    <img src="screenshots/zuck_with_face_detection.jpg" width="400" height="350"/>
   </p>
